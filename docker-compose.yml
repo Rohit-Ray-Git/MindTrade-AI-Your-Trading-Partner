@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: mindtrade_db
+      POSTGRES_USER: mindtrade_user
+      POSTGRES_PASSWORD: mindtrade_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mindtrade_user -d mindtrade_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for job queue
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # FastAPI Backend
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://mindtrade_user:mindtrade_pass@postgres:5432/mindtrade_db
+      - REDIS_URL=redis://redis:6379
+      - DEBUG=true
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+  # Streamlit Dashboard
+  dashboard:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - DATABASE_URL=postgresql://mindtrade_user:mindtrade_pass@postgres:5432/mindtrade_db
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+    command: streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      api:
+        condition: service_started
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
