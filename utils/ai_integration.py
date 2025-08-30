@@ -175,7 +175,7 @@ class GeminiAI:
                 
                 response = self.model.generate_content(prompt)
             
-            result = json.loads(response.text)
+            result = self._safe_json_parse(response.text, "trade")
             
             logger.info(f"Trade analysis completed for {trade_data.get('symbol')} with image: {bool(image_path)}")
             return result
@@ -232,7 +232,7 @@ class GeminiAI:
             """
             
             response = self.model.generate_content([prompt, image])
-            result = json.loads(response.text)
+            result = self._safe_json_parse(response.text, "market")
             
             logger.info(f"Market screenshot analysis completed")
             return result
@@ -276,7 +276,7 @@ class GeminiAI:
             else:
                 response = self.model.generate_content(prompt)
             
-            result = json.loads(response.text)
+            result = self._safe_json_parse(response.text, "psychology")
             
             logger.info(f"Psychology analysis completed for note: {note_text[:50]}...")
             return result
@@ -343,7 +343,7 @@ class GeminiAI:
             """
             
             response = self.model.generate_content(prompt)
-            result = json.loads(response.text)
+            result = self._safe_json_parse(response.text, "coaching")
             
             logger.info("Coaching advice generated successfully")
             return result
@@ -404,7 +404,7 @@ class GeminiAI:
             """
             
             response = self.model.generate_content(prompt)
-            result = json.loads(response.text)
+            result = self._safe_json_parse(response.text, "pattern")
             
             logger.info("Pattern analysis completed successfully")
             return result
@@ -412,6 +412,27 @@ class GeminiAI:
         except Exception as e:
             logger.error(f"Error in pattern detection: {e}")
             return self._get_default_pattern_analysis()
+    
+    def _safe_json_parse(self, response_text: str, analysis_type: str) -> Dict[str, Any]:
+        """Safely parse JSON response with fallback"""
+        try:
+            return json.loads(response_text)
+        except json.JSONDecodeError:
+            logger.warning(f"Gemini returned non-JSON response for {analysis_type}: {response_text[:100]}...")
+            
+            # Create fallback structured response based on analysis type
+            if analysis_type == "psychology":
+                return self._get_default_psychology_analysis()
+            elif analysis_type == "trade":
+                return self._get_default_trade_analysis()
+            elif analysis_type == "market":
+                return self._get_default_market_analysis()
+            elif analysis_type == "coaching":
+                return self._get_default_coaching_advice()
+            elif analysis_type == "pattern":
+                return self._get_default_pattern_analysis()
+            else:
+                return {"error": "Failed to parse response", "raw_text": response_text}
     
     def _extract_common_emotions(self, psychology_notes: List[Dict[str, Any]]) -> List[str]:
         """Extract common emotions from psychology notes"""
