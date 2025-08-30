@@ -8,9 +8,20 @@ import asyncio
 import pandas as pd
 from datetime import datetime, timedelta
 import json
+import sys
+from pathlib import Path
+
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent
+sys.path.append(str(project_root))
 
 from utils.delta_exchange import DeltaExchangeAPI, DeltaExchangeSync
 from models.dal import TradeDAL, get_db_session
+from models.models import Trade
 
 # Page config
 st.set_page_config(
@@ -70,18 +81,31 @@ if not delta_api.enabled:
        - Copy your **API Key** and **API Secret**
     
     3. **Configure Environment**
-       - Add to your `.env` file:
+       - Create or edit your `.env` file in the project root:
          ```
-         DELTA_API_KEY=your_api_key_here
-         DELTA_API_SECRET=your_api_secret_here
+         DELTA_API_KEY=your_actual_api_key_here
+         DELTA_API_SECRET=your_actual_api_secret_here
          ```
-       - Restart the application
+       - **Important:** Replace the placeholder text with your real API credentials
+       - Restart the Streamlit application
     
     4. **Test Connection**
        - Return to this page and test the connection
     """)
     
     st.warning("⚠️ **Important:** Keep your API keys secure and never share them publicly.")
+    
+    # Show current environment status
+    import os
+    api_key_set = bool(os.getenv("DELTA_API_KEY")) and not os.getenv("DELTA_API_KEY", "").startswith("your-")
+    api_secret_set = bool(os.getenv("DELTA_API_SECRET")) and not os.getenv("DELTA_API_SECRET", "").startswith("your-")
+    
+    st.subheader("🔍 Current Configuration Status")
+    st.write(f"**API Key:** {'✅ Set' if api_key_set else '❌ Not set or using placeholder'}")
+    st.write(f"**API Secret:** {'✅ Set' if api_secret_set else '❌ Not set or using placeholder'}")
+    
+    if not api_key_set or not api_secret_set:
+        st.error("Please update your `.env` file with real API credentials and restart the application.")
 
 else:
     # API Connection Test
@@ -237,22 +261,21 @@ else:
     
     # Get recent trades that were imported from Delta Exchange
     db = get_db_session()
-    trade_dal = TradeDAL(db)
     
     try:
         # Get trades with Delta Exchange source
         recent_trades = db.query(
-            trade_dal.model.id,
-            trade_dal.model.symbol,
-            trade_dal.model.direction,
-            trade_dal.model.pnl,
-            trade_dal.model.entry_time,
-            trade_dal.model.exchange,
-            trade_dal.model.external_id
+            Trade.id,
+            Trade.symbol,
+            Trade.direction,
+            Trade.pnl,
+            Trade.entry_time,
+            Trade.exchange,
+            Trade.external_id
         ).filter(
-            trade_dal.model.exchange == "Delta Exchange"
+            Trade.exchange == "Delta Exchange"
         ).order_by(
-            trade_dal.model.entry_time.desc()
+            Trade.entry_time.desc()
         ).limit(20).all()
         
         if recent_trades:
@@ -328,8 +351,8 @@ with col1:
         # Export Delta Exchange trades to CSV
         db = get_db_session()
         try:
-            delta_trades = db.query(trade_dal.model).filter(
-                trade_dal.model.exchange == "Delta Exchange"
+            delta_trades = db.query(Trade).filter(
+                Trade.exchange == "Delta Exchange"
             ).all()
             
             if delta_trades:

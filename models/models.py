@@ -36,7 +36,12 @@ class Trade(Base):
     pnl = Column(Float, nullable=False)
     r_multiple = Column(Float, nullable=False)
     trade_time = Column(DateTime, nullable=False)
+    entry_time = Column(DateTime)  # Optional entry time for compatibility
+    exit_time = Column(DateTime)   # Optional exit time for compatibility
     source = Column(String(20), default="manual")  # manual/delta
+    exchange = Column(String(50))  # Exchange name (Delta Exchange, etc)
+    external_id = Column(String(100))  # External trade ID from exchange
+    fees = Column(Float, default=0.0)  # Trading fees
     logic = Column(Text)  # Trade reasoning
     notes = Column(Text)  # General notes
     created_at = Column(DateTime(timezone=True), server_default=func.now())

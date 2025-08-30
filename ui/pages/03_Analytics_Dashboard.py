@@ -6,6 +6,17 @@ Comprehensive trading performance analysis and visualizations
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
+import sys
+from pathlib import Path
+
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent
+sys.path.append(str(project_root))
+
 from utils.analytics import TradingAnalytics
 from models.dal import get_db_session
 from models.models import Trade

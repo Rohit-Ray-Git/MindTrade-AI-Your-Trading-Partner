@@ -8,6 +8,16 @@ import pandas as pd
 from datetime import datetime, timedelta
 from typing import Dict, Any, List
 import json
+import sys
+from pathlib import Path
+
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent
+sys.path.append(str(project_root))
 
 from utils.ai_integration import GeminiAI
 from agents.crew_orchestrator import TradingCrewOrchestrator
