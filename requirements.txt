@@ -34,6 +34,10 @@ langchain-google-genai==0.0.6
 langchain-community==0.0.10
 google-auth==2.23.4
 
+# CrewAI for Multi-Agent System
+crewai==0.28.8
+crewai-tools==0.1.6
+
 # Vector Database
 chromadb==0.4.22
 

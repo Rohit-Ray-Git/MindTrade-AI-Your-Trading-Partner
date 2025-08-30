@@ -13,8 +13,8 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 # Import our modules
-from models.database import init_db, get_db_session
-from models.dal import TradeDAL, PsychologyDAL, SetupDAL, AnalyticsDAL
+from models.database import init_db
+from models.dal import TradeDAL, PsychologyDAL, SetupDAL, AnalyticsDAL, get_db_session
 from utils.ai_integration import GeminiAI
 
 # Page configuration
