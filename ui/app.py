@@ -16,6 +16,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 from models.database import init_db
 from models.dal import TradeDAL, PsychologyDAL, SetupDAL, AnalyticsDAL, get_db_session
 from utils.ai_integration import GeminiAI
+from orchestrator.ai_orchestrator import AIOrchestrator
 
 # Page configuration
 st.set_page_config(
@@ -63,24 +64,32 @@ def init_database():
         st.error(f"Database initialization failed: {e}")
         return False
 
-# Initialize AI
+# Initialize AI Orchestrator
 @st.cache_resource
-def init_ai():
-    return GeminiAI()
+def init_ai_orchestrator():
+    return AIOrchestrator()
 
 # Initialize components
 db_initialized = init_database()
-ai = init_ai()
+ai_orchestrator = init_ai_orchestrator()
 
 # Sidebar
 st.sidebar.title("MindTrade AI")
 st.sidebar.markdown("---")
 
 # AI Status
-if ai.enabled:
-    st.sidebar.success("🤖 AI Enabled (Gemini 2.5 Flash)")
+if ai_orchestrator.enabled:
+    st.sidebar.success("🤖 AI Orchestrator Enabled (Gemini 2.5 Flash)")
+    st.sidebar.info("✅ All Agents Active")
 else:
-    st.sidebar.warning("⚠️ AI Disabled - Add GOOGLE_API_KEY to enable")
+    st.sidebar.warning("⚠️ AI Orchestrator Disabled - Add GOOGLE_API_KEY to enable")
+    
+    # Show individual agent status
+    status = ai_orchestrator.get_orchestrator_status()
+    if not status['api_key_configured']:
+        st.sidebar.error("❌ API Key Missing")
+    else:
+        st.sidebar.warning("⚠️ Some agents disabled")
 
 # Navigation
 page = st.sidebar.selectbox(
