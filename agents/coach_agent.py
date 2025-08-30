@@ -225,7 +225,7 @@ class CoachAgent:
         # Initialize LLM
         if self.api_key:
             self.llm = ChatGoogleGenerativeAI(
-                model="gemini-1.5-flash",
+                model="gemini-2.5-flash",
                 google_api_key=self.api_key,
                 temperature=0.4,
                 max_output_tokens=3000

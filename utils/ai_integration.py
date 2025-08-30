@@ -27,12 +27,12 @@ class GeminiAI:
         
         # Configure Gemini
         genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('gemini-2.5-flash')
         self.enabled = True
         
         # Initialize LangChain integration
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",
+            model="gemini-2.5-flash",
             google_api_key=self.api_key,
             temperature=0.3,
             max_output_tokens=2048

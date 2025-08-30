@@ -18,14 +18,14 @@ class ChartAnalysisTool(BaseTool):
     
     def __init__(self):
         super().__init__()
-        self.gemini_ai = GeminiAI()
     
     def _run(self, image_path: str, trade_data: str) -> str:
         """Analyze chart with trade data"""
         try:
             trade_info = json.loads(trade_data)
-            if self.gemini_ai.enabled and os.path.exists(image_path):
-                analysis = self.gemini_ai.analyze_trade_with_image(trade_info, image_path)
+            gemini_ai = GeminiAI()
+            if gemini_ai.enabled and os.path.exists(image_path):
+                analysis = gemini_ai.analyze_trade_with_image(trade_info, image_path)
                 return json.dumps(analysis, indent=2)
             else:
                 return json.dumps({"error": "AI not enabled or image not found"})

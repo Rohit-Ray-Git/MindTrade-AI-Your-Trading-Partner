@@ -182,7 +182,7 @@ if page == "Dashboard":
             st.plotly_chart(fig_equity, use_container_width=True)
     
     # AI Coaching Section
-    if ai.enabled:
+    if ai_orchestrator.enabled:
         st.subheader("🤖 AI Coaching Insights")
         
         if st.button("Generate AI Coaching Advice"):
@@ -312,10 +312,12 @@ elif page == "Add Trade":
                         image_path = ""
                         if uploaded_image is not None:
                             image_bytes = uploaded_image.read()
-                            image_path = ai.save_image(image_bytes, trade.id, "trade_screenshot")
+                            from utils.ai_integration import GeminiAI
+                            gemini_ai = GeminiAI()
+                            image_path = gemini_ai.save_image(image_bytes, trade.id, "trade_screenshot")
                         
                         # AI Analysis
-                        if ai.enabled:
+                        if ai_orchestrator.enabled:
                             st.subheader("🤖 AI Analysis")
                             with st.spinner("Analyzing trade with AI..."):
                                 # Prepare trade data for AI
@@ -331,28 +333,35 @@ elif page == "Add Trade":
                                     'logic': logic
                                 }
                                 
-                                analysis = ai.analyze_trade_with_image(ai_trade_data, image_path)
+                                analysis = ai_orchestrator.process_new_trade(ai_trade_data, image_path, psych_note)
                                 
                                 # Display analysis
-                                col1, col2, col3 = st.columns(3)
-                                
-                                with col1:
-                                    st.metric("Trade Quality", f"{analysis['trade_quality_score']:.2f}")
-                                    st.metric("Risk Management", f"{analysis['risk_management_score']:.2f}")
-                                
-                                with col2:
-                                    st.metric("Execution Score", f"{analysis['execution_score']:.2f}")
-                                    st.write(f"**Setup Quality:** {analysis['setup_analysis']['setup_quality']}")
-                                
-                                with col3:
-                                    st.write("**Key Learnings:**")
-                                    for learning in analysis['key_learnings']:
-                                        st.write(f"• {learning}")
-                                
-                                if 'chart_analysis' in analysis:
-                                    st.markdown("**📊 Chart Analysis**")
-                                    st.write(f"**Market Structure:** {analysis['chart_analysis']['market_structure']}")
-                                    st.write(f"**Risk/Reward:** {analysis['chart_analysis']['risk_reward_ratio']}")
+                                if analysis.get('analysis_complete'):
+                                    trade_analysis = analysis.get('trade_analysis', {})
+                                    col1, col2, col3 = st.columns(3)
+                                    
+                                    with col1:
+                                        st.metric("Trade Quality", f"{trade_analysis.get('trade_quality_score', 0):.2f}")
+                                        st.metric("Risk Management", f"{trade_analysis.get('risk_management_score', 0):.2f}")
+                                    
+                                    with col2:
+                                        st.metric("Execution Score", f"{trade_analysis.get('execution_score', 0):.2f}")
+                                        setup_analysis = trade_analysis.get('setup_analysis', {})
+                                        st.write(f"**Setup Quality:** {setup_analysis.get('setup_quality', 'Unknown')}")
+                                    
+                                    with col3:
+                                        st.write("**Key Learnings:**")
+                                        for learning in trade_analysis.get('key_learnings', ['AI analysis not available']):
+                                            st.write(f"• {learning}")
+                                    
+                                    # Coaching insights
+                                    if 'coaching_insights' in analysis:
+                                        st.markdown("**🎯 Coaching Insights**")
+                                        coaching = analysis['coaching_insights']
+                                        for feedback in coaching.get('immediate_feedback', []):
+                                            st.info(feedback)
+                                else:
+                                    st.error("AI analysis failed. Please try again.")
                         
                         st.success(f"✅ Trade added successfully! ID: {trade.id}")
                         
@@ -478,7 +487,7 @@ elif page == "Analytics":
         st.dataframe(setup_df, use_container_width=True)
     
     # AI Pattern Analysis
-    if ai.enabled:
+    if ai_orchestrator.enabled:
         st.subheader("🤖 AI Pattern Analysis")
         
         if st.button("Analyze Trading Patterns"):
@@ -498,7 +507,7 @@ elif page == "Analytics":
                             'trade_time': trade.trade_time.strftime('%Y-%m-%d %H:%M')
                         })
                     
-                    patterns = ai.detect_patterns(trades_data)
+                    patterns = ai_orchestrator.pattern_finder.find_patterns(trades_data)
                     
                     # Display patterns
                     if patterns['setup_patterns']:
@@ -612,7 +621,7 @@ elif page == "Market Analysis":
         st.image(uploaded_market_image, caption="Uploaded Market Screenshot", use_column_width=True)
         
         if st.button("Analyze Market with AI"):
-            if ai.enabled:
+            if ai_orchestrator.enabled:
                 with st.spinner("Analyzing market with AI..."):
                     # Save image temporarily
                     image_bytes = uploaded_market_image.read()
@@ -623,7 +632,7 @@ elif page == "Market Analysis":
                     
                     try:
                         # Analyze with AI
-                        analysis = ai.analyze_market_screenshot(temp_path, context)
+                        analysis = ai_orchestrator.analyze_market_screenshot(temp_path, context)
                         
                         # Display results
                         st.subheader("🤖 AI Market Analysis")
