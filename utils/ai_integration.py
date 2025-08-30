@@ -3,14 +3,19 @@ AI Integration with Google Gemini 2.5 Flash
 """
 import os
 import json
-from typing import Dict, List, Any, Optional
+import base64
+from typing import Dict, List, Any, Optional, Union
+from pathlib import Path
 import google.generativeai as genai
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.schema import HumanMessage, SystemMessage
 from loguru import logger
+from PIL import Image
+import io
+from datetime import datetime
 
 class GeminiAI:
-    """Google Gemini AI integration for trading analysis"""
+    """Google Gemini AI integration for trading analysis with image support"""
     
     def __init__(self, api_key: Optional[str] = None):
         """Initialize Gemini AI"""
@@ -33,10 +38,211 @@ class GeminiAI:
             max_output_tokens=2048
         )
         
-        logger.info("Gemini AI initialized successfully")
+        # Create images directory
+        self.images_dir = Path("data/images")
+        self.images_dir.mkdir(parents=True, exist_ok=True)
+        
+        logger.info("Gemini AI initialized successfully with image support")
     
-    def analyze_psychology(self, note_text: str) -> Dict[str, Any]:
-        """Analyze psychology note using Gemini"""
+    def save_image(self, image_data: Union[str, bytes], trade_id: int, image_type: str = "screenshot") -> str:
+        """Save image to disk with organized structure"""
+        try:
+            # Create trade-specific directory
+            trade_dir = self.images_dir / f"trade_{trade_id}"
+            trade_dir.mkdir(exist_ok=True)
+            
+            # Generate filename with timestamp
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"{image_type}_{timestamp}.png"
+            filepath = trade_dir / filename
+            
+            # Save image
+            if isinstance(image_data, str):
+                # Base64 encoded image
+                image_bytes = base64.b64decode(image_data)
+            else:
+                image_bytes = image_data
+            
+            with open(filepath, 'wb') as f:
+                f.write(image_bytes)
+            
+            logger.info(f"Image saved: {filepath}")
+            return str(filepath)
+            
+        except Exception as e:
+            logger.error(f"Error saving image: {e}")
+            return ""
+    
+    def analyze_trade_with_image(self, trade_data: Dict[str, Any], image_path: Optional[str] = None) -> Dict[str, Any]:
+        """Analyze trade with optional image using Gemini"""
+        if not self.enabled:
+            return self._get_default_trade_analysis()
+        
+        try:
+            # Prepare trade information
+            trade_info = f"""
+            Trade Data:
+            - Symbol: {trade_data.get('symbol')}
+            - Direction: {trade_data.get('direction')}
+            - Entry: ${trade_data.get('entry_price')}
+            - Stop: ${trade_data.get('stop_price')}
+            - Exit: ${trade_data.get('exit_price')}
+            - P&L: ${trade_data.get('pnl')}
+            - R-Multiple: {trade_data.get('r_multiple')}
+            - Setup: {trade_data.get('setup_name', 'Unknown')}
+            - Logic: {trade_data.get('logic', 'No logic provided')}
+            """
+            
+            if image_path and os.path.exists(image_path):
+                # Load and analyze image
+                image = Image.open(image_path)
+                
+                prompt = f"""
+                Analyze this trading screenshot and the trade data to provide comprehensive insights.
+                
+                {trade_info}
+                
+                Please analyze the chart/screenshot and provide a JSON response with the following structure:
+                {{
+                    "chart_analysis": {{
+                        "market_structure": "string (trending/ranging/consolidating)",
+                        "key_levels": ["level1", "level2"],
+                        "setup_quality": "excellent/good/fair/poor",
+                        "entry_timing": "good/fair/poor",
+                        "exit_timing": "good/fair/poor",
+                        "risk_reward_ratio": "string",
+                        "market_context": "string"
+                    }},
+                    "trade_quality_score": float (0 to 1),
+                    "risk_management_score": float (0 to 1),
+                    "execution_score": float (0 to 1),
+                    "setup_analysis": {{
+                        "setup_quality": "excellent/good/fair/poor",
+                        "setup_notes": "string",
+                        "chart_patterns": ["pattern1", "pattern2"]
+                    }},
+                    "risk_analysis": {{
+                        "position_sizing": "appropriate/too_large/too_small",
+                        "stop_placement": "good/fair/poor",
+                        "risk_notes": "string"
+                    }},
+                    "execution_analysis": {{
+                        "entry_timing": "good/fair/poor",
+                        "exit_timing": "good/fair/poor",
+                        "execution_notes": "string"
+                    }},
+                    "improvement_suggestions": ["suggestion1", "suggestion2"],
+                    "key_learnings": ["learning1", "learning2"],
+                    "chart_insights": ["insight1", "insight2"]
+                }}
+                
+                Focus on providing actionable insights based on both the trade data and chart analysis.
+                """
+                
+                response = self.model.generate_content([prompt, image])
+            else:
+                # Text-only analysis
+                prompt = f"""
+                Analyze the following trade and provide structured insights:
+                
+                {trade_info}
+                
+                Please provide a JSON response with the following structure:
+                {{
+                    "trade_quality_score": float (0 to 1),
+                    "risk_management_score": float (0 to 1),
+                    "execution_score": float (0 to 1),
+                    "setup_analysis": {{
+                        "setup_quality": "excellent/good/fair/poor",
+                        "setup_notes": "string"
+                    }},
+                    "risk_analysis": {{
+                        "position_sizing": "appropriate/too_large/too_small",
+                        "stop_placement": "good/fair/poor",
+                        "risk_notes": "string"
+                    }},
+                    "execution_analysis": {{
+                        "entry_timing": "good/fair/poor",
+                        "exit_timing": "good/fair/poor",
+                        "execution_notes": "string"
+                    }},
+                    "improvement_suggestions": ["suggestion1", "suggestion2"],
+                    "key_learnings": ["learning1", "learning2"]
+                }}
+                
+                Focus on providing actionable insights for trade improvement.
+                """
+                
+                response = self.model.generate_content(prompt)
+            
+            result = json.loads(response.text)
+            
+            logger.info(f"Trade analysis completed for {trade_data.get('symbol')} with image: {bool(image_path)}")
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error in trade analysis: {e}")
+            return self._get_default_trade_analysis()
+    
+    def analyze_market_screenshot(self, image_path: str, context: str = "") -> Dict[str, Any]:
+        """Analyze market screenshot for setup identification and analysis"""
+        if not self.enabled:
+            return self._get_default_market_analysis()
+        
+        try:
+            image = Image.open(image_path)
+            
+            prompt = f"""
+            Analyze this market screenshot and identify potential trading setups and opportunities.
+            
+            Context: {context}
+            
+            Please provide a JSON response with the following structure:
+            {{
+                "market_analysis": {{
+                    "market_structure": "string (trending/ranging/consolidating)",
+                    "timeframe": "string (if visible)",
+                    "key_levels": ["level1", "level2", "level3"],
+                    "support_resistance": ["support1", "resistance1"],
+                    "volume_analysis": "string",
+                    "momentum": "string"
+                }},
+                "potential_setups": [
+                    {{
+                        "setup_type": "string",
+                        "confidence": float (0 to 1),
+                        "entry_zone": "string",
+                        "stop_loss": "string",
+                        "target": "string",
+                        "risk_reward": "string",
+                        "reasoning": "string"
+                    }}
+                ],
+                "risk_assessment": {{
+                    "market_volatility": "low/medium/high",
+                    "setup_quality": "excellent/good/fair/poor",
+                    "risk_level": "low/medium/high",
+                    "notes": "string"
+                }},
+                "recommendations": ["rec1", "rec2"],
+                "key_observations": ["obs1", "obs2"]
+            }}
+            
+            Focus on identifying high-probability setups and providing actionable trading insights.
+            """
+            
+            response = self.model.generate_content([prompt, image])
+            result = json.loads(response.text)
+            
+            logger.info(f"Market screenshot analysis completed")
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error in market screenshot analysis: {e}")
+            return self._get_default_market_analysis()
+    
+    def analyze_psychology_with_image(self, note_text: str, image_path: Optional[str] = None) -> Dict[str, Any]:
+        """Analyze psychology note with optional image (e.g., journal entry, mood tracking)"""
         if not self.enabled:
             return self._get_default_psychology_analysis()
         
@@ -64,7 +270,12 @@ class GeminiAI:
             Focus on identifying emotional states, behavioral patterns, and actionable insights for trading psychology improvement.
             """
             
-            response = self.model.generate_content(prompt)
+            if image_path and os.path.exists(image_path):
+                image = Image.open(image_path)
+                response = self.model.generate_content([prompt, image])
+            else:
+                response = self.model.generate_content(prompt)
+            
             result = json.loads(response.text)
             
             logger.info(f"Psychology analysis completed for note: {note_text[:50]}...")
@@ -73,62 +284,6 @@ class GeminiAI:
         except Exception as e:
             logger.error(f"Error in psychology analysis: {e}")
             return self._get_default_psychology_analysis()
-    
-    def analyze_trade(self, trade_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze trade using Gemini"""
-        if not self.enabled:
-            return self._get_default_trade_analysis()
-        
-        try:
-            prompt = f"""
-            Analyze the following trade and provide structured insights:
-            
-            Trade Data:
-            - Symbol: {trade_data.get('symbol')}
-            - Direction: {trade_data.get('direction')}
-            - Entry: ${trade_data.get('entry_price')}
-            - Stop: ${trade_data.get('stop_price')}
-            - Exit: ${trade_data.get('exit_price')}
-            - P&L: ${trade_data.get('pnl')}
-            - R-Multiple: {trade_data.get('r_multiple')}
-            - Setup: {trade_data.get('setup_name', 'Unknown')}
-            - Logic: {trade_data.get('logic', 'No logic provided')}
-            
-            Please provide a JSON response with the following structure:
-            {{
-                "trade_quality_score": float (0 to 1),
-                "risk_management_score": float (0 to 1),
-                "execution_score": float (0 to 1),
-                "setup_analysis": {{
-                    "setup_quality": "excellent/good/fair/poor",
-                    "setup_notes": "string"
-                }},
-                "risk_analysis": {{
-                    "position_sizing": "appropriate/too_large/too_small",
-                    "stop_placement": "good/fair/poor",
-                    "risk_notes": "string"
-                }},
-                "execution_analysis": {{
-                    "entry_timing": "good/fair/poor",
-                    "exit_timing": "good/fair/poor",
-                    "execution_notes": "string"
-                }},
-                "improvement_suggestions": ["suggestion1", "suggestion2"],
-                "key_learnings": ["learning1", "learning2"]
-            }}
-            
-            Focus on providing actionable insights for trade improvement.
-            """
-            
-            response = self.model.generate_content(prompt)
-            result = json.loads(response.text)
-            
-            logger.info(f"Trade analysis completed for {trade_data.get('symbol')}")
-            return result
-            
-        except Exception as e:
-            logger.error(f"Error in trade analysis: {e}")
-            return self._get_default_trade_analysis()
     
     def generate_coaching_advice(self, recent_trades: List[Dict[str, Any]], psychology_notes: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Generate personalized coaching advice"""
@@ -314,6 +469,28 @@ class GeminiAI:
             },
             "improvement_suggestions": ["Enable AI features for detailed suggestions"],
             "key_learnings": ["Enable AI features for detailed insights"]
+        }
+    
+    def _get_default_market_analysis(self) -> Dict[str, Any]:
+        """Default market analysis when AI is disabled"""
+        return {
+            "market_analysis": {
+                "market_structure": "unknown",
+                "timeframe": "unknown",
+                "key_levels": [],
+                "support_resistance": [],
+                "volume_analysis": "AI analysis not available",
+                "momentum": "unknown"
+            },
+            "potential_setups": [],
+            "risk_assessment": {
+                "market_volatility": "unknown",
+                "setup_quality": "fair",
+                "risk_level": "medium",
+                "notes": "Enable AI features for detailed analysis"
+            },
+            "recommendations": ["Enable AI features for setup identification"],
+            "key_observations": ["Enable AI features for detailed observations"]
         }
     
     def _get_default_coaching_advice(self) -> Dict[str, Any]:
