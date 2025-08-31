@@ -1,0 +1,4240 @@
+{
+  "products": [
+    {
+      "position_size_limit": 255633,
+      "insurance_fund_margin_contribution": "1",
+      "spot_index": {
+        "config": {
+          "impact_size": {
+            "max_impact_size": 150000,
+            "min_impact_size": 5000,
+            "step_value": 5000
+          },
+          "price_alert_enabled": true,
+          "quoting_asset": "USDT",
+          "service_id": 1,
+          "underlying_asset": "BTC"
+        },
+        "constituent_exchanges": [
+          {
+            "exchange": "binance",
+            "health_interval": 60,
+            "health_priority": 1,
+            "weight": 1
+          },
+          {
+            "exchange": "okex",
+            "health_interval": 60,
+            "health_priority": 2,
+            "weight": 1
+          },
+          {
+            "exchange": "bybit",
+            "health_interval": 60,
+            "health_priority": 3,
+            "weight": 1
+          }
+        ],
+        "constituent_indices": null,
+        "description": "Bitcoin spot price index quoted in USDT",
+        "health_interval": 300,
+        "id": 2,
+        "impact_size": "1.000000000000000000",
+        "index_type": "spot_pair",
+        "is_composite": false,
+        "price_method": "orderbook",
+        "quoting_asset_id": 5,
+        "symbol": ".DEXBTUSDT",
+        "tick_size": "0.500000000000000000",
+        "underlying_asset_id": 2
+      },
+      "settling_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "contract_value": "0.001",
+      "tick_size": "0.1",
+      "funding_method": "mark_price",
+      "contract_type": "call_options",
+      "ui_config": {
+        "default_trading_view_candle": "15",
+        "leverage_slider_values": [
+          1,
+          2,
+          5,
+          10,
+          25,
+          50,
+          100
+        ],
+        "price_clubbing_values": [
+          0.1,
+          0.5,
+          1,
+          5,
+          10
+        ],
+        "show_bracket_orders": false,
+        "sort_priority": 30,
+        "tags": []
+      },
+      "contract_unit_currency": "BTC",
+      "max_leverage_notional": "200000",
+      "initial_margin": "1",
+      "state": "live",
+      "id": 258626,
+      "trading_status": "operational",
+      "annualized_funding": "10.95",
+      "auction_finish_time": null,
+      "disruption_reason": null,
+      "underlying_asset": {
+        "base_withdrawal_fee": "0.000500000000000000",
+        "id": 2,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "10.000000000000000000",
+        "kyc_withdrawal_limit": "0.500000000000000000",
+        "min_withdrawal_amount": "0.001000000000000000",
+        "minimum_precision": 4,
+        "name": "Bitcoin",
+        "networks": [
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.001",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.000000000000000000",
+            "min_withdrawal_amount": "0.002000000000000000",
+            "minimum_deposit_confirmations": 2,
+            "network": "BTC",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.00002",
+            "deposit_status": "disabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "0.000100000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 2,
+        "symbol": "BTC",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "product_specs": {
+        "backup_vol_expiry_time": 31536000,
+        "isolated_liq_penalty_factor": 0.001,
+        "isolated_liq_premium_penalty_factor": 0.2,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.125,
+        "vol_calculation_method": "orderbook",
+        "vol_expiry_time": 31536000
+      },
+      "initial_margin_scaling_factor": "0.000002",
+      "settlement_price": null,
+      "is_quanto": false,
+      "strike_price": "104400",
+      "taker_commission_rate": "0.0003",
+      "maker_commission_rate": "0.0003",
+      "settlement_time": "2025-09-01T12:00:00Z",
+      "short_description": "BTC  Call",
+      "impact_size": 200,
+      "auction_start_time": "2025-08-30T02:00:00Z",
+      "barrier_price": null,
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "symbol": "C-BTC-104400-010925",
+      "basis_factor_max_limit": "10.95",
+      "maintenance_margin": "0.5",
+      "default_leverage": "100.000000000000000000",
+      "maintenance_margin_scaling_factor": "0.000001",
+      "launch_time": "2025-08-30T02:00:00Z",
+      "price_band": "2",
+      "description": "BTC call option expiring on 1-9-2025",
+      "liquidation_penalty_factor": "0.5"
+    },
+    {
+      "position_size_limit": 255633,
+      "insurance_fund_margin_contribution": "1",
+      "spot_index": {
+        "config": {
+          "impact_size": {
+            "max_impact_size": 150000,
+            "min_impact_size": 5000,
+            "step_value": 5000
+          },
+          "price_alert_enabled": true,
+          "quoting_asset": "USDT",
+          "service_id": 1,
+          "underlying_asset": "BTC"
+        },
+        "constituent_exchanges": [
+          {
+            "exchange": "binance",
+            "health_interval": 60,
+            "health_priority": 1,
+            "weight": 1
+          },
+          {
+            "exchange": "okex",
+            "health_interval": 60,
+            "health_priority": 2,
+            "weight": 1
+          },
+          {
+            "exchange": "bybit",
+            "health_interval": 60,
+            "health_priority": 3,
+            "weight": 1
+          }
+        ],
+        "constituent_indices": null,
+        "description": "Bitcoin spot price index quoted in USDT",
+        "health_interval": 300,
+        "id": 2,
+        "impact_size": "1.000000000000000000",
+        "index_type": "spot_pair",
+        "is_composite": false,
+        "price_method": "orderbook",
+        "quoting_asset_id": 5,
+        "symbol": ".DEXBTUSDT",
+        "tick_size": "0.500000000000000000",
+        "underlying_asset_id": 2
+      },
+      "settling_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "contract_value": "0.001",
+      "tick_size": "0.1",
+      "funding_method": "mark_price",
+      "contract_type": "put_options",
+      "ui_config": {
+        "default_trading_view_candle": "15",
+        "leverage_slider_values": [
+          1,
+          2,
+          5,
+          10,
+          25,
+          50,
+          100
+        ],
+        "price_clubbing_values": [
+          0.1,
+          0.5,
+          1,
+          5,
+          10
+        ],
+        "show_bracket_orders": false,
+        "sort_priority": 30,
+        "tags": []
+      },
+      "contract_unit_currency": "BTC",
+      "max_leverage_notional": "200000",
+      "initial_margin": "1",
+      "state": "live",
+      "id": 258625,
+      "trading_status": "operational",
+      "annualized_funding": "10.95",
+      "auction_finish_time": null,
+      "disruption_reason": null,
+      "underlying_asset": {
+        "base_withdrawal_fee": "0.000500000000000000",
+        "id": 2,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "10.000000000000000000",
+        "kyc_withdrawal_limit": "0.500000000000000000",
+        "min_withdrawal_amount": "0.001000000000000000",
+        "minimum_precision": 4,
+        "name": "Bitcoin",
+        "networks": [
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.001",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.000000000000000000",
+            "min_withdrawal_amount": "0.002000000000000000",
+            "minimum_deposit_confirmations": 2,
+            "network": "BTC",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.00002",
+            "deposit_status": "disabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "0.000100000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 2,
+        "symbol": "BTC",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "product_specs": {
+        "backup_vol_expiry_time": 31536000,
+        "isolated_liq_penalty_factor": 0.001,
+        "isolated_liq_premium_penalty_factor": 0.2,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.125,
+        "vol_calculation_method": "orderbook",
+        "vol_expiry_time": 31536000
+      },
+      "initial_margin_scaling_factor": "0.000002",
+      "settlement_price": null,
+      "is_quanto": false,
+      "strike_price": "104800",
+      "taker_commission_rate": "0.0003",
+      "maker_commission_rate": "0.0003",
+      "settlement_time": "2025-09-01T12:00:00Z",
+      "short_description": "BTC  Put",
+      "impact_size": 200,
+      "auction_start_time": "2025-08-29T21:00:00Z",
+      "barrier_price": null,
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "symbol": "P-BTC-104800-010925",
+      "basis_factor_max_limit": "10.95",
+      "maintenance_margin": "0.5",
+      "default_leverage": "100.000000000000000000",
+      "maintenance_margin_scaling_factor": "0.000001",
+      "launch_time": "2025-08-29T21:00:00Z",
+      "price_band": "2",
+      "description": "BTC put option expiring on 1-9-2025",
+      "liquidation_penalty_factor": "0.5"
+    },
+    {
+      "position_size_limit": 255633,
+      "insurance_fund_margin_contribution": "1",
+      "spot_index": {
+        "config": {
+          "impact_size": {
+            "max_impact_size": 150000,
+            "min_impact_size": 5000,
+            "step_value": 5000
+          },
+          "price_alert_enabled": true,
+          "quoting_asset": "USDT",
+          "service_id": 1,
+          "underlying_asset": "BTC"
+        },
+        "constituent_exchanges": [
+          {
+            "exchange": "binance",
+            "health_interval": 60,
+            "health_priority": 1,
+            "weight": 1
+          },
+          {
+            "exchange": "okex",
+            "health_interval": 60,
+            "health_priority": 2,
+            "weight": 1
+          },
+          {
+            "exchange": "bybit",
+            "health_interval": 60,
+            "health_priority": 3,
+            "weight": 1
+          }
+        ],
+        "constituent_indices": null,
+        "description": "Bitcoin spot price index quoted in USDT",
+        "health_interval": 300,
+        "id": 2,
+        "impact_size": "1.000000000000000000",
+        "index_type": "spot_pair",
+        "is_composite": false,
+        "price_method": "orderbook",
+        "quoting_asset_id": 5,
+        "symbol": ".DEXBTUSDT",
+        "tick_size": "0.500000000000000000",
+        "underlying_asset_id": 2
+      },
+      "settling_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "contract_value": "0.001",
+      "tick_size": "0.1",
+      "funding_method": "mark_price",
+      "contract_type": "call_options",
+      "ui_config": {
+        "default_trading_view_candle": "15",
+        "leverage_slider_values": [
+          1,
+          2,
+          5,
+          10,
+          25,
+          50,
+          100
+        ],
+        "price_clubbing_values": [
+          0.1,
+          0.5,
+          1,
+          5,
+          10
+        ],
+        "show_bracket_orders": false,
+        "sort_priority": 30,
+        "tags": []
+      },
+      "contract_unit_currency": "BTC",
+      "max_leverage_notional": "200000",
+      "initial_margin": "1",
+      "state": "live",
+      "id": 258624,
+      "trading_status": "operational",
+      "annualized_funding": "10.95",
+      "auction_finish_time": null,
+      "disruption_reason": null,
+      "underlying_asset": {
+        "base_withdrawal_fee": "0.000500000000000000",
+        "id": 2,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "10.000000000000000000",
+        "kyc_withdrawal_limit": "0.500000000000000000",
+        "min_withdrawal_amount": "0.001000000000000000",
+        "minimum_precision": 4,
+        "name": "Bitcoin",
+        "networks": [
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.001",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.000000000000000000",
+            "min_withdrawal_amount": "0.002000000000000000",
+            "minimum_deposit_confirmations": 2,
+            "network": "BTC",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.00002",
+            "deposit_status": "disabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "0.000100000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 2,
+        "symbol": "BTC",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "product_specs": {
+        "backup_vol_expiry_time": 31536000,
+        "isolated_liq_penalty_factor": 0.001,
+        "isolated_liq_premium_penalty_factor": 0.2,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.125,
+        "vol_calculation_method": "orderbook",
+        "vol_expiry_time": 31536000
+      },
+      "initial_margin_scaling_factor": "0.000002",
+      "settlement_price": null,
+      "is_quanto": false,
+      "strike_price": "107000",
+      "taker_commission_rate": "0.0003",
+      "maker_commission_rate": "0.0003",
+      "settlement_time": "2025-09-01T12:00:00Z",
+      "short_description": "BTC  Call",
+      "impact_size": 200,
+      "auction_start_time": "2025-08-29T20:30:01Z",
+      "barrier_price": null,
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "symbol": "C-BTC-107000-010925",
+      "basis_factor_max_limit": "10.95",
+      "maintenance_margin": "0.5",
+      "default_leverage": "100.000000000000000000",
+      "maintenance_margin_scaling_factor": "0.000001",
+      "launch_time": "2025-08-29T20:30:01Z",
+      "price_band": "2",
+      "description": "BTC call option expiring on 1-9-2025",
+      "liquidation_penalty_factor": "0.5"
+    },
+    {
+      "position_size_limit": 255633,
+      "insurance_fund_margin_contribution": "1",
+      "spot_index": {
+        "config": {
+          "impact_size": {
+            "max_impact_size": 150000,
+            "min_impact_size": 5000,
+            "step_value": 5000
+          },
+          "price_alert_enabled": true,
+          "quoting_asset": "USDT",
+          "service_id": 1,
+          "underlying_asset": "BTC"
+        },
+        "constituent_exchanges": [
+          {
+            "exchange": "binance",
+            "health_interval": 60,
+            "health_priority": 1,
+            "weight": 1
+          },
+          {
+            "exchange": "okex",
+            "health_interval": 60,
+            "health_priority": 2,
+            "weight": 1
+          },
+          {
+            "exchange": "bybit",
+            "health_interval": 60,
+            "health_priority": 3,
+            "weight": 1
+          }
+        ],
+        "constituent_indices": null,
+        "description": "Bitcoin spot price index quoted in USDT",
+        "health_interval": 300,
+        "id": 2,
+        "impact_size": "1.000000000000000000",
+        "index_type": "spot_pair",
+        "is_composite": false,
+        "price_method": "orderbook",
+        "quoting_asset_id": 5,
+        "symbol": ".DEXBTUSDT",
+        "tick_size": "0.500000000000000000",
+        "underlying_asset_id": 2
+      },
+      "settling_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "contract_value": "0.001",
+      "tick_size": "0.1",
+      "funding_method": "mark_price",
+      "contract_type": "put_options",
+      "ui_config": {
+        "default_trading_view_candle": "15",
+        "leverage_slider_values": [
+          1,
+          2,
+          5,
+          10,
+          25,
+          50,
+          100
+        ],
+        "price_clubbing_values": [
+          0.1,
+          0.5,
+          1,
+          5,
+          10
+        ],
+        "show_bracket_orders": false,
+        "sort_priority": 30,
+        "tags": []
+      },
+      "contract_unit_currency": "BTC",
+      "max_leverage_notional": "200000",
+      "initial_margin": "1",
+      "state": "live",
+      "id": 258623,
+      "trading_status": "operational",
+      "annualized_funding": "10.95",
+      "auction_finish_time": null,
+      "disruption_reason": null,
+      "underlying_asset": {
+        "base_withdrawal_fee": "0.000500000000000000",
+        "id": 2,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "10.000000000000000000",
+        "kyc_withdrawal_limit": "0.500000000000000000",
+        "min_withdrawal_amount": "0.001000000000000000",
+        "minimum_precision": 4,
+        "name": "Bitcoin",
+        "networks": [
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.001",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.000000000000000000",
+            "min_withdrawal_amount": "0.002000000000000000",
+            "minimum_deposit_confirmations": 2,
+            "network": "BTC",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.00002",
+            "deposit_status": "disabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "0.000100000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 2,
+        "symbol": "BTC",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "product_specs": {
+        "backup_vol_expiry_time": 31536000,
+        "isolated_liq_penalty_factor": 0.001,
+        "isolated_liq_premium_penalty_factor": 0.2,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.125,
+        "vol_calculation_method": "orderbook",
+        "vol_expiry_time": 31536000
+      },
+      "initial_margin_scaling_factor": "0.000002",
+      "settlement_price": null,
+      "is_quanto": false,
+      "strike_price": "107000",
+      "taker_commission_rate": "0.0003",
+      "maker_commission_rate": "0.0003",
+      "settlement_time": "2025-09-01T12:00:00Z",
+      "short_description": "BTC  Put",
+      "impact_size": 200,
+      "auction_start_time": "2025-08-29T20:30:01Z",
+      "barrier_price": null,
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "symbol": "P-BTC-107000-010925",
+      "basis_factor_max_limit": "10.95",
+      "maintenance_margin": "0.5",
+      "default_leverage": "100.000000000000000000",
+      "maintenance_margin_scaling_factor": "0.000001",
+      "launch_time": "2025-08-29T20:30:01Z",
+      "price_band": "2",
+      "description": "BTC put option expiring on 1-9-2025",
+      "liquidation_penalty_factor": "0.5"
+    },
+    {
+      "position_size_limit": 255633,
+      "insurance_fund_margin_contribution": "1",
+      "spot_index": {
+        "config": {
+          "impact_size": {
+            "max_impact_size": 150000,
+            "min_impact_size": 5000,
+            "step_value": 5000
+          },
+          "price_alert_enabled": true,
+          "quoting_asset": "USDT",
+          "service_id": 1,
+          "underlying_asset": "BTC"
+        },
+        "constituent_exchanges": [
+          {
+            "exchange": "binance",
+            "health_interval": 60,
+            "health_priority": 1,
+            "weight": 1
+          },
+          {
+            "exchange": "okex",
+            "health_interval": 60,
+            "health_priority": 2,
+            "weight": 1
+          },
+          {
+            "exchange": "bybit",
+            "health_interval": 60,
+            "health_priority": 3,
+            "weight": 1
+          }
+        ],
+        "constituent_indices": null,
+        "description": "Bitcoin spot price index quoted in USDT",
+        "health_interval": 300,
+        "id": 2,
+        "impact_size": "1.000000000000000000",
+        "index_type": "spot_pair",
+        "is_composite": false,
+        "price_method": "orderbook",
+        "quoting_asset_id": 5,
+        "symbol": ".DEXBTUSDT",
+        "tick_size": "0.500000000000000000",
+        "underlying_asset_id": 2
+      },
+      "settling_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "contract_value": "0.001",
+      "tick_size": "0.1",
+      "funding_method": "mark_price",
+      "contract_type": "call_options",
+      "ui_config": {
+        "default_trading_view_candle": "15",
+        "leverage_slider_values": [
+          1,
+          2,
+          5,
+          10,
+          25,
+          50,
+          100
+        ],
+        "price_clubbing_values": [
+          0.1,
+          0.5,
+          1,
+          5,
+          10
+        ],
+        "show_bracket_orders": false,
+        "sort_priority": 30,
+        "tags": []
+      },
+      "contract_unit_currency": "BTC",
+      "max_leverage_notional": "200000",
+      "initial_margin": "1",
+      "state": "live",
+      "id": 258622,
+      "trading_status": "operational",
+      "annualized_funding": "10.95",
+      "auction_finish_time": null,
+      "disruption_reason": null,
+      "underlying_asset": {
+        "base_withdrawal_fee": "0.000500000000000000",
+        "id": 2,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "10.000000000000000000",
+        "kyc_withdrawal_limit": "0.500000000000000000",
+        "min_withdrawal_amount": "0.001000000000000000",
+        "minimum_precision": 4,
+        "name": "Bitcoin",
+        "networks": [
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.001",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.000000000000000000",
+            "min_withdrawal_amount": "0.002000000000000000",
+            "minimum_deposit_confirmations": 2,
+            "network": "BTC",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.00002",
+            "deposit_status": "disabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "0.000100000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 2,
+        "symbol": "BTC",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "product_specs": {
+        "backup_vol_expiry_time": 31536000,
+        "isolated_liq_penalty_factor": 0.001,
+        "isolated_liq_premium_penalty_factor": 0.2,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.125,
+        "vol_calculation_method": "orderbook",
+        "vol_expiry_time": 31536000
+      },
+      "initial_margin_scaling_factor": "0.000002",
+      "settlement_price": null,
+      "is_quanto": false,
+      "strike_price": "107000",
+      "taker_commission_rate": "0.0003",
+      "maker_commission_rate": "0.0003",
+      "settlement_time": "2025-08-31T12:00:00Z",
+      "short_description": "BTC  Call",
+      "impact_size": 200,
+      "auction_start_time": "2025-08-29T20:30:01Z",
+      "barrier_price": null,
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "symbol": "C-BTC-107000-310825",
+      "basis_factor_max_limit": "10.95",
+      "maintenance_margin": "0.5",
+      "default_leverage": "100.000000000000000000",
+      "maintenance_margin_scaling_factor": "0.000001",
+      "launch_time": "2025-08-29T20:30:01Z",
+      "price_band": "2",
+      "description": "BTC call option expiring on 31-8-2025",
+      "liquidation_penalty_factor": "0.5"
+    },
+    {
+      "position_size_limit": 255633,
+      "insurance_fund_margin_contribution": "1",
+      "spot_index": {
+        "config": {
+          "impact_size": {
+            "max_impact_size": 150000,
+            "min_impact_size": 5000,
+            "step_value": 5000
+          },
+          "price_alert_enabled": true,
+          "quoting_asset": "USDT",
+          "service_id": 1,
+          "underlying_asset": "BTC"
+        },
+        "constituent_exchanges": [
+          {
+            "exchange": "binance",
+            "health_interval": 60,
+            "health_priority": 1,
+            "weight": 1
+          },
+          {
+            "exchange": "okex",
+            "health_interval": 60,
+            "health_priority": 2,
+            "weight": 1
+          },
+          {
+            "exchange": "bybit",
+            "health_interval": 60,
+            "health_priority": 3,
+            "weight": 1
+          }
+        ],
+        "constituent_indices": null,
+        "description": "Bitcoin spot price index quoted in USDT",
+        "health_interval": 300,
+        "id": 2,
+        "impact_size": "1.000000000000000000",
+        "index_type": "spot_pair",
+        "is_composite": false,
+        "price_method": "orderbook",
+        "quoting_asset_id": 5,
+        "symbol": ".DEXBTUSDT",
+        "tick_size": "0.500000000000000000",
+        "underlying_asset_id": 2
+      },
+      "settling_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "contract_value": "0.001",
+      "tick_size": "0.1",
+      "funding_method": "mark_price",
+      "contract_type": "put_options",
+      "ui_config": {
+        "default_trading_view_candle": "15",
+        "leverage_slider_values": [
+          1,
+          2,
+          5,
+          10,
+          25,
+          50,
+          100
+        ],
+        "price_clubbing_values": [
+          0.1,
+          0.5,
+          1,
+          5,
+          10
+        ],
+        "show_bracket_orders": false,
+        "sort_priority": 30,
+        "tags": []
+      },
+      "contract_unit_currency": "BTC",
+      "max_leverage_notional": "200000",
+      "initial_margin": "1",
+      "state": "live",
+      "id": 258621,
+      "trading_status": "operational",
+      "annualized_funding": "10.95",
+      "auction_finish_time": null,
+      "disruption_reason": null,
+      "underlying_asset": {
+        "base_withdrawal_fee": "0.000500000000000000",
+        "id": 2,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "10.000000000000000000",
+        "kyc_withdrawal_limit": "0.500000000000000000",
+        "min_withdrawal_amount": "0.001000000000000000",
+        "minimum_precision": 4,
+        "name": "Bitcoin",
+        "networks": [
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.001",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.000000000000000000",
+            "min_withdrawal_amount": "0.002000000000000000",
+            "minimum_deposit_confirmations": 2,
+            "network": "BTC",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.00002",
+            "deposit_status": "disabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "0.000100000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 2,
+        "symbol": "BTC",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "product_specs": {
+        "backup_vol_expiry_time": 31536000,
+        "isolated_liq_penalty_factor": 0.001,
+        "isolated_liq_premium_penalty_factor": 0.2,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.125,
+        "vol_calculation_method": "orderbook",
+        "vol_expiry_time": 31536000
+      },
+      "initial_margin_scaling_factor": "0.000002",
+      "settlement_price": null,
+      "is_quanto": false,
+      "strike_price": "107000",
+      "taker_commission_rate": "0.0003",
+      "maker_commission_rate": "0.0003",
+      "settlement_time": "2025-08-31T12:00:00Z",
+      "short_description": "BTC  Put",
+      "impact_size": 200,
+      "auction_start_time": "2025-08-29T20:30:01Z",
+      "barrier_price": null,
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "symbol": "P-BTC-107000-310825",
+      "basis_factor_max_limit": "10.95",
+      "maintenance_margin": "0.5",
+      "default_leverage": "100.000000000000000000",
+      "maintenance_margin_scaling_factor": "0.000001",
+      "launch_time": "2025-08-29T20:30:01Z",
+      "price_band": "2",
+      "description": "BTC put option expiring on 31-8-2025",
+      "liquidation_penalty_factor": "0.5"
+    },
+    {
+      "position_size_limit": 255633,
+      "insurance_fund_margin_contribution": "1",
+      "spot_index": {
+        "config": {
+          "impact_size": {
+            "max_impact_size": 150000,
+            "min_impact_size": 5000,
+            "step_value": 5000
+          },
+          "price_alert_enabled": true,
+          "quoting_asset": "USDT",
+          "service_id": 1,
+          "underlying_asset": "BTC"
+        },
+        "constituent_exchanges": [
+          {
+            "exchange": "binance",
+            "health_interval": 60,
+            "health_priority": 1,
+            "weight": 1
+          },
+          {
+            "exchange": "okex",
+            "health_interval": 60,
+            "health_priority": 2,
+            "weight": 1
+          },
+          {
+            "exchange": "bybit",
+            "health_interval": 60,
+            "health_priority": 3,
+            "weight": 1
+          }
+        ],
+        "constituent_indices": null,
+        "description": "Bitcoin spot price index quoted in USDT",
+        "health_interval": 300,
+        "id": 2,
+        "impact_size": "1.000000000000000000",
+        "index_type": "spot_pair",
+        "is_composite": false,
+        "price_method": "orderbook",
+        "quoting_asset_id": 5,
+        "symbol": ".DEXBTUSDT",
+        "tick_size": "0.500000000000000000",
+        "underlying_asset_id": 2
+      },
+      "settling_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "contract_value": "0.001",
+      "tick_size": "0.1",
+      "funding_method": "mark_price",
+      "contract_type": "call_options",
+      "ui_config": {
+        "default_trading_view_candle": "15",
+        "leverage_slider_values": [
+          1,
+          2,
+          5,
+          10,
+          25,
+          50,
+          100
+        ],
+        "price_clubbing_values": [
+          0.1,
+          0.5,
+          1,
+          5,
+          10
+        ],
+        "show_bracket_orders": false,
+        "sort_priority": 30,
+        "tags": []
+      },
+      "contract_unit_currency": "BTC",
+      "max_leverage_notional": "200000",
+      "initial_margin": "1",
+      "state": "live",
+      "id": 258620,
+      "trading_status": "operational",
+      "annualized_funding": "10.95",
+      "auction_finish_time": null,
+      "disruption_reason": null,
+      "underlying_asset": {
+        "base_withdrawal_fee": "0.000500000000000000",
+        "id": 2,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "10.000000000000000000",
+        "kyc_withdrawal_limit": "0.500000000000000000",
+        "min_withdrawal_amount": "0.001000000000000000",
+        "minimum_precision": 4,
+        "name": "Bitcoin",
+        "networks": [
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.001",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.000000000000000000",
+            "min_withdrawal_amount": "0.002000000000000000",
+            "minimum_deposit_confirmations": 2,
+            "network": "BTC",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.00002",
+            "deposit_status": "disabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "0.000100000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 2,
+        "symbol": "BTC",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "product_specs": {
+        "backup_vol_expiry_time": 31536000,
+        "isolated_liq_penalty_factor": 0.001,
+        "isolated_liq_premium_penalty_factor": 0.2,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.125,
+        "vol_calculation_method": "orderbook",
+        "vol_expiry_time": 31536000
+      },
+      "initial_margin_scaling_factor": "0.000002",
+      "settlement_price": null,
+      "is_quanto": false,
+      "strike_price": "106600",
+      "taker_commission_rate": "0.0003",
+      "maker_commission_rate": "0.0003",
+      "settlement_time": "2025-08-30T12:00:00Z",
+      "short_description": "BTC  Call",
+      "impact_size": 200,
+      "auction_start_time": "2025-08-29T20:30:01Z",
+      "barrier_price": null,
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "symbol": "C-BTC-106600-300825",
+      "basis_factor_max_limit": "10.95",
+      "maintenance_margin": "0.5",
+      "default_leverage": "100.000000000000000000",
+      "maintenance_margin_scaling_factor": "0.000001",
+      "launch_time": "2025-08-29T20:30:01Z",
+      "price_band": "2",
+      "description": "BTC call option expiring on 30-8-2025",
+      "liquidation_penalty_factor": "0.5"
+    },
+    {
+      "position_size_limit": 255633,
+      "insurance_fund_margin_contribution": "1",
+      "spot_index": {
+        "config": {
+          "impact_size": {
+            "max_impact_size": 150000,
+            "min_impact_size": 5000,
+            "step_value": 5000
+          },
+          "price_alert_enabled": true,
+          "quoting_asset": "USDT",
+          "service_id": 1,
+          "underlying_asset": "BTC"
+        },
+        "constituent_exchanges": [
+          {
+            "exchange": "binance",
+            "health_interval": 60,
+            "health_priority": 1,
+            "weight": 1
+          },
+          {
+            "exchange": "okex",
+            "health_interval": 60,
+            "health_priority": 2,
+            "weight": 1
+          },
+          {
+            "exchange": "bybit",
+            "health_interval": 60,
+            "health_priority": 3,
+            "weight": 1
+          }
+        ],
+        "constituent_indices": null,
+        "description": "Bitcoin spot price index quoted in USDT",
+        "health_interval": 300,
+        "id": 2,
+        "impact_size": "1.000000000000000000",
+        "index_type": "spot_pair",
+        "is_composite": false,
+        "price_method": "orderbook",
+        "quoting_asset_id": 5,
+        "symbol": ".DEXBTUSDT",
+        "tick_size": "0.500000000000000000",
+        "underlying_asset_id": 2
+      },
+      "settling_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "contract_value": "0.001",
+      "tick_size": "0.1",
+      "funding_method": "mark_price",
+      "contract_type": "put_options",
+      "ui_config": {
+        "default_trading_view_candle": "15",
+        "leverage_slider_values": [
+          1,
+          2,
+          5,
+          10,
+          25,
+          50,
+          100
+        ],
+        "price_clubbing_values": [
+          0.1,
+          0.5,
+          1,
+          5,
+          10
+        ],
+        "show_bracket_orders": false,
+        "sort_priority": 30,
+        "tags": []
+      },
+      "contract_unit_currency": "BTC",
+      "max_leverage_notional": "200000",
+      "initial_margin": "1",
+      "state": "live",
+      "id": 258619,
+      "trading_status": "operational",
+      "annualized_funding": "10.95",
+      "auction_finish_time": null,
+      "disruption_reason": null,
+      "underlying_asset": {
+        "base_withdrawal_fee": "0.000500000000000000",
+        "id": 2,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "10.000000000000000000",
+        "kyc_withdrawal_limit": "0.500000000000000000",
+        "min_withdrawal_amount": "0.001000000000000000",
+        "minimum_precision": 4,
+        "name": "Bitcoin",
+        "networks": [
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.001",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.000000000000000000",
+            "min_withdrawal_amount": "0.002000000000000000",
+            "minimum_deposit_confirmations": 2,
+            "network": "BTC",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.00002",
+            "deposit_status": "disabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "0.000100000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 2,
+        "symbol": "BTC",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "product_specs": {
+        "backup_vol_expiry_time": 31536000,
+        "isolated_liq_penalty_factor": 0.001,
+        "isolated_liq_premium_penalty_factor": 0.2,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.125,
+        "vol_calculation_method": "orderbook",
+        "vol_expiry_time": 31536000
+      },
+      "initial_margin_scaling_factor": "0.000002",
+      "settlement_price": null,
+      "is_quanto": false,
+      "strike_price": "106600",
+      "taker_commission_rate": "0.0003",
+      "maker_commission_rate": "0.0003",
+      "settlement_time": "2025-08-30T12:00:00Z",
+      "short_description": "BTC  Put",
+      "impact_size": 200,
+      "auction_start_time": "2025-08-29T20:30:00Z",
+      "barrier_price": null,
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "symbol": "P-BTC-106600-300825",
+      "basis_factor_max_limit": "10.95",
+      "maintenance_margin": "0.5",
+      "default_leverage": "100.000000000000000000",
+      "maintenance_margin_scaling_factor": "0.000001",
+      "launch_time": "2025-08-29T20:30:00Z",
+      "price_band": "2",
+      "description": "BTC put option expiring on 30-8-2025",
+      "liquidation_penalty_factor": "0.5"
+    },
+    {
+      "position_size_limit": 255633,
+      "insurance_fund_margin_contribution": "1",
+      "spot_index": {
+        "config": {
+          "impact_size": {
+            "max_impact_size": 150000,
+            "min_impact_size": 5000,
+            "step_value": 5000
+          },
+          "price_alert_enabled": true,
+          "quoting_asset": "USDT",
+          "service_id": 1,
+          "underlying_asset": "BTC"
+        },
+        "constituent_exchanges": [
+          {
+            "exchange": "binance",
+            "health_interval": 60,
+            "health_priority": 1,
+            "weight": 1
+          },
+          {
+            "exchange": "okex",
+            "health_interval": 60,
+            "health_priority": 2,
+            "weight": 1
+          },
+          {
+            "exchange": "bybit",
+            "health_interval": 60,
+            "health_priority": 3,
+            "weight": 1
+          }
+        ],
+        "constituent_indices": null,
+        "description": "Bitcoin spot price index quoted in USDT",
+        "health_interval": 300,
+        "id": 2,
+        "impact_size": "1.000000000000000000",
+        "index_type": "spot_pair",
+        "is_composite": false,
+        "price_method": "orderbook",
+        "quoting_asset_id": 5,
+        "symbol": ".DEXBTUSDT",
+        "tick_size": "0.500000000000000000",
+        "underlying_asset_id": 2
+      },
+      "settling_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "contract_value": "0.001",
+      "tick_size": "0.1",
+      "funding_method": "mark_price",
+      "contract_type": "call_options",
+      "ui_config": {
+        "default_trading_view_candle": "15",
+        "leverage_slider_values": [
+          1,
+          2,
+          5,
+          10,
+          25,
+          50,
+          100
+        ],
+        "price_clubbing_values": [
+          0.1,
+          0.5,
+          1,
+          5,
+          10
+        ],
+        "show_bracket_orders": false,
+        "sort_priority": 30,
+        "tags": []
+      },
+      "contract_unit_currency": "BTC",
+      "max_leverage_notional": "200000",
+      "initial_margin": "1",
+      "state": "live",
+      "id": 258618,
+      "trading_status": "operational",
+      "annualized_funding": "10.95",
+      "auction_finish_time": null,
+      "disruption_reason": null,
+      "underlying_asset": {
+        "base_withdrawal_fee": "0.000500000000000000",
+        "id": 2,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "10.000000000000000000",
+        "kyc_withdrawal_limit": "0.500000000000000000",
+        "min_withdrawal_amount": "0.001000000000000000",
+        "minimum_precision": 4,
+        "name": "Bitcoin",
+        "networks": [
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.001",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.000000000000000000",
+            "min_withdrawal_amount": "0.002000000000000000",
+            "minimum_deposit_confirmations": 2,
+            "network": "BTC",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.00002",
+            "deposit_status": "disabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "0.000100000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 2,
+        "symbol": "BTC",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "product_specs": {
+        "backup_vol_expiry_time": 31536000,
+        "isolated_liq_penalty_factor": 0.001,
+        "isolated_liq_premium_penalty_factor": 0.2,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.125,
+        "vol_calculation_method": "orderbook",
+        "vol_expiry_time": 31536000
+      },
+      "initial_margin_scaling_factor": "0.000002",
+      "settlement_price": null,
+      "is_quanto": false,
+      "strike_price": "105500",
+      "taker_commission_rate": "0.0003",
+      "maker_commission_rate": "0.0003",
+      "settlement_time": "2025-09-05T12:00:00Z",
+      "short_description": "BTC  Call",
+      "impact_size": 200,
+      "auction_start_time": "2025-08-29T20:30:00Z",
+      "barrier_price": null,
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "symbol": "C-BTC-105500-050925",
+      "basis_factor_max_limit": "10.95",
+      "maintenance_margin": "0.5",
+      "default_leverage": "100.000000000000000000",
+      "maintenance_margin_scaling_factor": "0.000001",
+      "launch_time": "2025-08-29T20:30:00Z",
+      "price_band": "2",
+      "description": "BTC call option expiring on 5-9-2025",
+      "liquidation_penalty_factor": "0.5"
+    },
+    {
+      "position_size_limit": 255633,
+      "insurance_fund_margin_contribution": "1",
+      "spot_index": {
+        "config": {
+          "impact_size": {
+            "max_impact_size": 150000,
+            "min_impact_size": 5000,
+            "step_value": 5000
+          },
+          "price_alert_enabled": true,
+          "quoting_asset": "USDT",
+          "service_id": 1,
+          "underlying_asset": "BTC"
+        },
+        "constituent_exchanges": [
+          {
+            "exchange": "binance",
+            "health_interval": 60,
+            "health_priority": 1,
+            "weight": 1
+          },
+          {
+            "exchange": "okex",
+            "health_interval": 60,
+            "health_priority": 2,
+            "weight": 1
+          },
+          {
+            "exchange": "bybit",
+            "health_interval": 60,
+            "health_priority": 3,
+            "weight": 1
+          }
+        ],
+        "constituent_indices": null,
+        "description": "Bitcoin spot price index quoted in USDT",
+        "health_interval": 300,
+        "id": 2,
+        "impact_size": "1.000000000000000000",
+        "index_type": "spot_pair",
+        "is_composite": false,
+        "price_method": "orderbook",
+        "quoting_asset_id": 5,
+        "symbol": ".DEXBTUSDT",
+        "tick_size": "0.500000000000000000",
+        "underlying_asset_id": 2
+      },
+      "settling_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "contract_value": "0.001",
+      "tick_size": "0.1",
+      "funding_method": "mark_price",
+      "contract_type": "put_options",
+      "ui_config": {
+        "default_trading_view_candle": "15",
+        "leverage_slider_values": [
+          1,
+          2,
+          5,
+          10,
+          25,
+          50,
+          100
+        ],
+        "price_clubbing_values": [
+          0.1,
+          0.5,
+          1,
+          5,
+          10
+        ],
+        "show_bracket_orders": false,
+        "sort_priority": 30,
+        "tags": []
+      },
+      "contract_unit_currency": "BTC",
+      "max_leverage_notional": "200000",
+      "initial_margin": "1",
+      "state": "live",
+      "id": 258617,
+      "trading_status": "operational",
+      "annualized_funding": "10.95",
+      "auction_finish_time": null,
+      "disruption_reason": null,
+      "underlying_asset": {
+        "base_withdrawal_fee": "0.000500000000000000",
+        "id": 2,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "10.000000000000000000",
+        "kyc_withdrawal_limit": "0.500000000000000000",
+        "min_withdrawal_amount": "0.001000000000000000",
+        "minimum_precision": 4,
+        "name": "Bitcoin",
+        "networks": [
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.001",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.000000000000000000",
+            "min_withdrawal_amount": "0.002000000000000000",
+            "minimum_deposit_confirmations": 2,
+            "network": "BTC",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": null,
+            "base_withdrawal_fee": "0.00002",
+            "deposit_status": "disabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "0.000100000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 2,
+        "symbol": "BTC",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "product_specs": {
+        "backup_vol_expiry_time": 31536000,
+        "isolated_liq_penalty_factor": 0.001,
+        "isolated_liq_premium_penalty_factor": 0.2,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.125,
+        "vol_calculation_method": "orderbook",
+        "vol_expiry_time": 31536000
+      },
+      "initial_margin_scaling_factor": "0.000002",
+      "settlement_price": null,
+      "is_quanto": false,
+      "strike_price": "105500",
+      "taker_commission_rate": "0.0003",
+      "maker_commission_rate": "0.0003",
+      "settlement_time": "2025-09-05T12:00:00Z",
+      "short_description": "BTC  Put",
+      "impact_size": 200,
+      "auction_start_time": "2025-08-29T20:30:00Z",
+      "barrier_price": null,
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "base_withdrawal_fee": "10.000000000000000000",
+        "id": 5,
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "100000.000000000000000000",
+        "kyc_withdrawal_limit": "10000.000000000000000000",
+        "min_withdrawal_amount": "30.000000000000000000",
+        "minimum_precision": 2,
+        "name": "Tether",
+        "networks": [
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "10",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "30.000000000000000000",
+            "minimum_deposit_confirmations": 12,
+            "network": "ERC20",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "1",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "6.000000000000000000",
+            "minimum_deposit_confirmations": 15,
+            "network": "BEP20(BSC)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "3",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "1.000000000000000000",
+            "min_withdrawal_amount": "10.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "TRC20(TRON)",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          },
+          {
+            "allowed_deposit_groups": "G1",
+            "base_withdrawal_fee": "0",
+            "deposit_status": "enabled",
+            "memo_required": false,
+            "min_deposit_amount": "0.500000000000000000",
+            "min_withdrawal_amount": "1.000000000000000000",
+            "minimum_deposit_confirmations": 1,
+            "network": "POLYGON",
+            "variable_withdrawal_fee": "0",
+            "withdrawal_status": "enabled"
+          }
+        ],
+        "precision": 8,
+        "sort_priority": 1,
+        "symbol": "USDT",
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "symbol": "P-BTC-105500-050925",
+      "basis_factor_max_limit": "10.95",
+      "maintenance_margin": "0.5",
+      "default_leverage": "100.000000000000000000",
+      "maintenance_margin_scaling_factor": "0.000001",
+      "launch_time": "2025-08-29T20:30:00Z",
+      "price_band": "2",
+      "description": "BTC put option expiring on 5-9-2025",
+      "liquidation_penalty_factor": "0.5"
+    }
+  ],
+  "candles": [
+    {
+      "close": 108288,
+      "high": 108500.5,
+      "low": 108212,
+      "open": 108306.5,
+      "time": 1756533600,
+      "volume": 1969
+    },
+    {
+      "close": 108334.5,
+      "high": 108434.5,
+      "low": 108091.5,
+      "open": 108391.5,
+      "time": 1756530000,
+      "volume": 3612
+    },
+    {
+      "close": 108385.5,
+      "high": 108634,
+      "low": 108326.5,
+      "open": 108392.5,
+      "time": 1756526400,
+      "volume": 2561
+    },
+    {
+      "close": 108384,
+      "high": 108384,
+      "low": 107720,
+      "open": 107720,
+      "time": 1756522800,
+      "volume": 2974
+    },
+    {
+      "close": 107737.5,
+      "high": 107900.5,
+      "low": 107381.5,
+      "open": 107381.5,
+      "time": 1756519200,
+      "volume": 3379
+    },
+    {
+      "close": 107390,
+      "high": 108323.5,
+      "low": 107390,
+      "open": 108250,
+      "time": 1756515600,
+      "volume": 4331
+    },
+    {
+      "close": 108261.5,
+      "high": 108359,
+      "low": 108111.5,
+      "open": 108321.5,
+      "time": 1756512000,
+      "volume": 4621
+    },
+    {
+      "close": 108324.5,
+      "high": 108517,
+      "low": 108324.5,
+      "open": 108401,
+      "time": 1756508400,
+      "volume": 4784
+    },
+    {
+      "close": 108347,
+      "high": 108444.5,
+      "low": 108170.5,
+      "open": 108426.5,
+      "time": 1756504800,
+      "volume": 3895
+    },
+    {
+      "close": 108407,
+      "high": 108420,
+      "low": 107432.5,
+      "open": 107754.5,
+      "time": 1756501200,
+      "volume": 5217
+    },
+    {
+      "close": 107763,
+      "high": 108152.5,
+      "low": 107562.5,
+      "open": 108151.5,
+      "time": 1756497600,
+      "volume": 12346
+    },
+    {
+      "close": 108181.5,
+      "high": 108693,
+      "low": 108005,
+      "open": 108111,
+      "time": 1756494000,
+      "volume": 13456
+    },
+    {
+      "close": 108139.5,
+      "high": 108407,
+      "low": 108073.5,
+      "open": 108316.5,
+      "time": 1756490400,
+      "volume": 10120
+    },
+    {
+      "close": 108434.5,
+      "high": 108688.5,
+      "low": 108142.5,
+      "open": 108688.5,
+      "time": 1756486800,
+      "volume": 13972
+    },
+    {
+      "close": 108690,
+      "high": 108792.5,
+      "low": 108137,
+      "open": 108369.5,
+      "time": 1756483200,
+      "volume": 12982
+    },
+    {
+      "close": 108389,
+      "high": 108650.5,
+      "low": 108177,
+      "open": 108177,
+      "time": 1756479600,
+      "volume": 12038
+    },
+    {
+      "close": 108097,
+      "high": 109395.5,
+      "low": 108097,
+      "open": 109075.5,
+      "time": 1756476000,
+      "volume": 30590
+    },
+    {
+      "close": 109042.5,
+      "high": 110719,
+      "low": 108947.5,
+      "open": 110683,
+      "time": 1756472400,
+      "volume": 23844
+    },
+    {
+      "close": 110683,
+      "high": 110954.5,
+      "low": 110032,
+      "open": 110062.5,
+      "time": 1756468800,
+      "volume": 9620
+    },
+    {
+      "close": 110032.5,
+      "high": 110102.5,
+      "low": 109805,
+      "open": 110059,
+      "time": 1756465200,
+      "volume": 4526
+    },
+    {
+      "close": 109966.5,
+      "high": 109987,
+      "low": 109731,
+      "open": 109731,
+      "time": 1756461600,
+      "volume": 4842
+    },
+    {
+      "close": 109739,
+      "high": 109888,
+      "low": 109400,
+      "open": 109559.5,
+      "time": 1756458000,
+      "volume": 4781
+    },
+    {
+      "close": 109581.5,
+      "high": 110225.5,
+      "low": 109573.5,
+      "open": 109974.5,
+      "time": 1756454400,
+      "volume": 6094
+    },
+    {
+      "close": 109936,
+      "high": 111256.5,
+      "low": 109857.5,
+      "open": 111252.5,
+      "time": 1756450800,
+      "volume": 12337
+    },
+    {
+      "close": 111258,
+      "high": 111362,
+      "low": 110934,
+      "open": 111275,
+      "time": 1756447200,
+      "volume": 14570
+    },
+    {
+      "close": 111275,
+      "high": 111526,
+      "low": 111119,
+      "open": 111469.5,
+      "time": 1756443600,
+      "volume": 4726
+    },
+    {
+      "close": 111468.5,
+      "high": 111810.5,
+      "low": 111412,
+      "open": 111677,
+      "time": 1756440000,
+      "volume": 2730
+    },
+    {
+      "close": 111679,
+      "high": 111792.5,
+      "low": 111292.5,
+      "open": 111373.5,
+      "time": 1756436400,
+      "volume": 3322
+    },
+    {
+      "close": 111421,
+      "high": 111716.5,
+      "low": 111333.5,
+      "open": 111391,
+      "time": 1756432800,
+      "volume": 4976
+    },
+    {
+      "close": 111450,
+      "high": 112221,
+      "low": 111391.5,
+      "open": 112221,
+      "time": 1756429200,
+      "volume": 8855
+    },
+    {
+      "close": 112156,
+      "high": 112568.5,
+      "low": 112086.5,
+      "open": 112510.5,
+      "time": 1756425600,
+      "volume": 8378
+    },
+    {
+      "close": 112509,
+      "high": 112532,
+      "low": 112267.5,
+      "open": 112297.5,
+      "time": 1756422000,
+      "volume": 7297
+    },
+    {
+      "close": 112291.5,
+      "high": 112405,
+      "low": 111963.5,
+      "open": 111963.5,
+      "time": 1756418400,
+      "volume": 5867
+    },
+    {
+      "close": 111963.5,
+      "high": 112067.5,
+      "low": 111841,
+      "open": 111844,
+      "time": 1756414800,
+      "volume": 3697
+    },
+    {
+      "close": 111859.5,
+      "high": 112053,
+      "low": 111834,
+      "open": 111841,
+      "time": 1756411200,
+      "volume": 10069
+    },
+    {
+      "close": 111863,
+      "high": 112501,
+      "low": 111863,
+      "open": 112314.5,
+      "time": 1756407600,
+      "volume": 4036
+    },
+    {
+      "close": 112332.5,
+      "high": 112654.5,
+      "low": 112170,
+      "open": 112343,
+      "time": 1756404000,
+      "volume": 9549
+    },
+    {
+      "close": 112326.5,
+      "high": 112569.5,
+      "low": 112163.5,
+      "open": 112329,
+      "time": 1756400400,
+      "volume": 14452
+    },
+    {
+      "close": 112292.5,
+      "high": 113126.5,
+      "low": 112292.5,
+      "open": 112667,
+      "time": 1756396800,
+      "volume": 19180
+    },
+    {
+      "close": 112630.5,
+      "high": 113208,
+      "low": 112359,
+      "open": 113069.5,
+      "time": 1756393200,
+      "volume": 11213
+    },
+    {
+      "close": 113117,
+      "high": 113260.5,
+      "low": 112543.5,
+      "open": 112779.5,
+      "time": 1756389600,
+      "volume": 10270
+    },
+    {
+      "close": 112752.5,
+      "high": 113397,
+      "low": 112597,
+      "open": 113200,
+      "time": 1756386000,
+      "volume": 11425
+    },
+    {
+      "close": 113191,
+      "high": 113273.5,
+      "low": 112738,
+      "open": 112907.5,
+      "time": 1756382400,
+      "volume": 6849
+    },
+    {
+      "close": 112860,
+      "high": 113102.5,
+      "low": 112801.5,
+      "open": 113063.5,
+      "time": 1756378800,
+      "volume": 3044
+    },
+    {
+      "close": 113064,
+      "high": 113064,
+      "low": 112778,
+      "open": 112814,
+      "time": 1756375200,
+      "volume": 8620
+    },
+    {
+      "close": 112805.5,
+      "high": 113085,
+      "low": 112801,
+      "open": 113046.5,
+      "time": 1756371600,
+      "volume": 2917
+    },
+    {
+      "close": 113070.5,
+      "high": 113296.5,
+      "low": 112972,
+      "open": 113082,
+      "time": 1756368000,
+      "volume": 4992
+    },
+    {
+      "close": 113081.5,
+      "high": 113300.5,
+      "low": 112954,
+      "open": 113157,
+      "time": 1756364400,
+      "volume": 6490
+    },
+    {
+      "close": 113158.5,
+      "high": 113167,
+      "low": 112672,
+      "open": 112794,
+      "time": 1756360800,
+      "volume": 2525
+    },
+    {
+      "close": 112821.5,
+      "high": 113092.5,
+      "low": 112644.5,
+      "open": 112970,
+      "time": 1756357200,
+      "volume": 13772
+    },
+    {
+      "close": 112925.5,
+      "high": 113038.5,
+      "low": 111911,
+      "open": 111947.5,
+      "time": 1756353600,
+      "volume": 4609
+    },
+    {
+      "close": 111957.5,
+      "high": 111974.5,
+      "low": 111361.5,
+      "open": 111401,
+      "time": 1756350000,
+      "volume": 2630
+    },
+    {
+      "close": 111451,
+      "high": 111709.5,
+      "low": 111402.5,
+      "open": 111642.5,
+      "time": 1756346400,
+      "volume": 3147
+    },
+    {
+      "close": 111608.5,
+      "high": 111655.5,
+      "low": 111283,
+      "open": 111283,
+      "time": 1756342800,
+      "volume": 2344
+    },
+    {
+      "close": 111282.5,
+      "high": 111485.5,
+      "low": 110858.5,
+      "open": 111217.5,
+      "time": 1756339200,
+      "volume": 5754
+    },
+    {
+      "close": 111201,
+      "high": 111486.5,
+      "low": 111059.5,
+      "open": 111355,
+      "time": 1756335600,
+      "volume": 3806
+    },
+    {
+      "close": 111351,
+      "high": 111553,
+      "low": 111077.5,
+      "open": 111371.5,
+      "time": 1756332000,
+      "volume": 5961
+    },
+    {
+      "close": 111467.5,
+      "high": 112335.5,
+      "low": 111301,
+      "open": 112279,
+      "time": 1756328400,
+      "volume": 5422
+    },
+    {
+      "close": 112318.5,
+      "high": 112319,
+      "low": 111244.5,
+      "open": 112012,
+      "time": 1756324800,
+      "volume": 20749
+    },
+    {
+      "close": 111991.5,
+      "high": 112165,
+      "low": 111636,
+      "open": 111931.5,
+      "time": 1756321200,
+      "volume": 9776
+    },
+    {
+      "close": 111871.5,
+      "high": 112567,
+      "low": 111871.5,
+      "open": 112333.5,
+      "time": 1756317600,
+      "volume": 11590
+    },
+    {
+      "close": 112338,
+      "high": 112395,
+      "low": 111878.5,
+      "open": 112074,
+      "time": 1756314000,
+      "volume": 8567
+    },
+    {
+      "close": 112081.5,
+      "high": 112194.5,
+      "low": 111545,
+      "open": 111987,
+      "time": 1756310400,
+      "volume": 9969
+    },
+    {
+      "close": 111961,
+      "high": 112018.5,
+      "low": 111569.5,
+      "open": 111751,
+      "time": 1756306800,
+      "volume": 6030
+    },
+    {
+      "close": 111745.5,
+      "high": 112551,
+      "low": 111264.5,
+      "open": 111424.5,
+      "time": 1756303200,
+      "volume": 12935
+    },
+    {
+      "close": 111434,
+      "high": 111828.5,
+      "low": 110997.5,
+      "open": 111269.5,
+      "time": 1756299600,
+      "volume": 15970
+    },
+    {
+      "close": 111299.5,
+      "high": 111358,
+      "low": 110982,
+      "open": 111245.5,
+      "time": 1756296000,
+      "volume": 3836
+    },
+    {
+      "close": 111274.5,
+      "high": 111323,
+      "low": 110958.5,
+      "open": 110958.5,
+      "time": 1756292400,
+      "volume": 1781
+    },
+    {
+      "close": 110951,
+      "high": 111222.5,
+      "low": 110773.5,
+      "open": 110773.5,
+      "time": 1756288800,
+      "volume": 5548
+    },
+    {
+      "close": 110782,
+      "high": 111073,
+      "low": 110695.5,
+      "open": 110695.5,
+      "time": 1756285200,
+      "volume": 2738
+    },
+    {
+      "close": 110715,
+      "high": 110804,
+      "low": 110381.5,
+      "open": 110698,
+      "time": 1756281600,
+      "volume": 2647
+    },
+    {
+      "close": 110641.5,
+      "high": 111067,
+      "low": 110597.5,
+      "open": 111051,
+      "time": 1756278000,
+      "volume": 22612
+    },
+    {
+      "close": 110993.5,
+      "high": 111322.5,
+      "low": 110989,
+      "open": 111322.5,
+      "time": 1756274400,
+      "volume": 1606
+    },
+    {
+      "close": 111310,
+      "high": 111620.5,
+      "low": 111304,
+      "open": 111541.5,
+      "time": 1756270800,
+      "volume": 2619
+    },
+    {
+      "close": 111586,
+      "high": 111704,
+      "low": 111379,
+      "open": 111379,
+      "time": 1756267200,
+      "volume": 2860
+    },
+    {
+      "close": 111428.5,
+      "high": 111663,
+      "low": 110895.5,
+      "open": 111121.5,
+      "time": 1756263600,
+      "volume": 3381
+    },
+    {
+      "close": 111120,
+      "high": 111434,
+      "low": 111101,
+      "open": 111299.5,
+      "time": 1756260000,
+      "volume": 2019
+    },
+    {
+      "close": 111268.5,
+      "high": 111414.5,
+      "low": 111072.5,
+      "open": 111333,
+      "time": 1756256400,
+      "volume": 2651
+    },
+    {
+      "close": 111338.5,
+      "high": 111798.5,
+      "low": 111313,
+      "open": 111738.5,
+      "time": 1756252800,
+      "volume": 3996
+    },
+    {
+      "close": 111715.5,
+      "high": 112344.5,
+      "low": 111708,
+      "open": 111868,
+      "time": 1756249200,
+      "volume": 4859
+    },
+    {
+      "close": 111884,
+      "high": 111889.5,
+      "low": 111552,
+      "open": 111563.5,
+      "time": 1756245600,
+      "volume": 4581
+    },
+    {
+      "close": 111555,
+      "high": 111555,
+      "low": 111091.5,
+      "open": 111293.5,
+      "time": 1756242000,
+      "volume": 3787
+    },
+    {
+      "close": 111298.5,
+      "high": 111354,
+      "low": 110908.5,
+      "open": 111077.5,
+      "time": 1756238400,
+      "volume": 12393
+    },
+    {
+      "close": 111092.5,
+      "high": 111138.5,
+      "low": 110498.5,
+      "open": 110635.5,
+      "time": 1756234800,
+      "volume": 24808
+    },
+    {
+      "close": 110710,
+      "high": 110954,
+      "low": 109948,
+      "open": 109948,
+      "time": 1756231200,
+      "volume": 8966
+    },
+    {
+      "close": 109950.5,
+      "high": 110141,
+      "low": 109577.5,
+      "open": 110135.5,
+      "time": 1756227600,
+      "volume": 7338
+    },
+    {
+      "close": 110088.5,
+      "high": 110088.5,
+      "low": 109460.5,
+      "open": 109684,
+      "time": 1756224000,
+      "volume": 8517
+    },
+    {
+      "close": 109688.5,
+      "high": 110520,
+      "low": 109531.5,
+      "open": 110263,
+      "time": 1756220400,
+      "volume": 7640
+    },
+    {
+      "close": 110327.5,
+      "high": 110457,
+      "low": 109780.5,
+      "open": 110100,
+      "time": 1756216800,
+      "volume": 14599
+    },
+    {
+      "close": 110000,
+      "high": 110205.5,
+      "low": 109569,
+      "open": 110114.5,
+      "time": 1756213200,
+      "volume": 10704
+    },
+    {
+      "close": 110196,
+      "high": 110629.5,
+      "low": 109571,
+      "open": 109856.5,
+      "time": 1756209600,
+      "volume": 7878
+    },
+    {
+      "close": 109814,
+      "high": 110186.5,
+      "low": 109570.5,
+      "open": 110186.5,
+      "time": 1756206000,
+      "volume": 4250
+    },
+    {
+      "close": 110172,
+      "high": 110380,
+      "low": 110028,
+      "open": 110160.5,
+      "time": 1756202400,
+      "volume": 2363
+    },
+    {
+      "close": 110111,
+      "high": 110377,
+      "low": 110001,
+      "open": 110112.5,
+      "time": 1756198800,
+      "volume": 11744
+    },
+    {
+      "close": 110067,
+      "high": 110412.5,
+      "low": 109987.5,
+      "open": 110253,
+      "time": 1756195200,
+      "volume": 2354
+    },
+    {
+      "close": 110268.5,
+      "high": 110508,
+      "low": 109723.5,
+      "open": 109962.5,
+      "time": 1756191600,
+      "volume": 7215
+    },
+    {
+      "close": 109949,
+      "high": 110313.5,
+      "low": 109877,
+      "open": 110214.5,
+      "time": 1756188000,
+      "volume": 2144
+    },
+    {
+      "close": 110169.5,
+      "high": 110321,
+      "low": 110056.5,
+      "open": 110069,
+      "time": 1756184400,
+      "volume": 2610
+    },
+    {
+      "close": 110103.5,
+      "high": 110199,
+      "low": 109866.5,
+      "open": 109866.5,
+      "time": 1756180800,
+      "volume": 2605
+    },
+    {
+      "close": 109841,
+      "high": 109907,
+      "low": 109408,
+      "open": 109678.5,
+      "time": 1756177200,
+      "volume": 3361
+    },
+    {
+      "close": 109654,
+      "high": 109988,
+      "low": 109488.5,
+      "open": 109839,
+      "time": 1756173600,
+      "volume": 4140
+    },
+    {
+      "close": 109883,
+      "high": 109883,
+      "low": 108765.5,
+      "open": 109020,
+      "time": 1756170000,
+      "volume": 6947
+    },
+    {
+      "close": 109207,
+      "high": 109993.5,
+      "low": 108888.5,
+      "open": 109993.5,
+      "time": 1756166400,
+      "volume": 15400
+    },
+    {
+      "close": 110100.5,
+      "high": 110250.5,
+      "low": 109773,
+      "open": 110087.5,
+      "time": 1756162800,
+      "volume": 4202
+    },
+    {
+      "close": 110139,
+      "high": 110572.5,
+      "low": 109885,
+      "open": 109885,
+      "time": 1756159200,
+      "volume": 8981
+    },
+    {
+      "close": 109868,
+      "high": 110256.5,
+      "low": 109273,
+      "open": 109719.5,
+      "time": 1756155600,
+      "volume": 14101
+    },
+    {
+      "close": 109585,
+      "high": 110978,
+      "low": 109381,
+      "open": 110749.5,
+      "time": 1756152000,
+      "volume": 30891
+    },
+    {
+      "close": 110622.5,
+      "high": 112368,
+      "low": 110622.5,
+      "open": 112368,
+      "time": 1756148400,
+      "volume": 10400
+    },
+    {
+      "close": 112414.5,
+      "high": 112588.5,
+      "low": 112230.5,
+      "open": 112358,
+      "time": 1756144800,
+      "volume": 3278
+    },
+    {
+      "close": 112370,
+      "high": 112752,
+      "low": 112149,
+      "open": 112490,
+      "time": 1756141200,
+      "volume": 4464
+    },
+    {
+      "close": 112509.5,
+      "high": 112905.5,
+      "low": 112044.5,
+      "open": 112155.5,
+      "time": 1756137600,
+      "volume": 7280
+    },
+    {
+      "close": 112171,
+      "high": 112523,
+      "low": 111825.5,
+      "open": 112260.5,
+      "time": 1756134000,
+      "volume": 8509
+    },
+    {
+      "close": 112224,
+      "high": 112247.5,
+      "low": 111365.5,
+      "open": 111365.5,
+      "time": 1756130400,
+      "volume": 14686
+    },
+    {
+      "close": 111436.5,
+      "high": 111687.5,
+      "low": 110539.5,
+      "open": 111532.5,
+      "time": 1756126800,
+      "volume": 14785
+    },
+    {
+      "close": 111531,
+      "high": 111598,
+      "low": 111029.5,
+      "open": 111152,
+      "time": 1756123200,
+      "volume": 10108
+    },
+    {
+      "close": 111155.5,
+      "high": 111221.5,
+      "low": 110890.5,
+      "open": 110920,
+      "time": 1756119600,
+      "volume": 8113
+    },
+    {
+      "close": 110929,
+      "high": 111739,
+      "low": 110922.5,
+      "open": 111702,
+      "time": 1756116000,
+      "volume": 5851
+    },
+    {
+      "close": 111738,
+      "high": 111777,
+      "low": 111211,
+      "open": 111341,
+      "time": 1756112400,
+      "volume": 3455
+    },
+    {
+      "close": 111348,
+      "high": 111748.5,
+      "low": 111036,
+      "open": 111441,
+      "time": 1756108800,
+      "volume": 7410
+    },
+    {
+      "close": 111424,
+      "high": 112066,
+      "low": 111281,
+      "open": 111868,
+      "time": 1756105200,
+      "volume": 9072
+    },
+    {
+      "close": 111892.5,
+      "high": 112388.5,
+      "low": 111707,
+      "open": 112310,
+      "time": 1756101600,
+      "volume": 6146
+    },
+    {
+      "close": 112303,
+      "high": 112806.5,
+      "low": 112299,
+      "open": 112738.5,
+      "time": 1756098000,
+      "volume": 4837
+    },
+    {
+      "close": 112733,
+      "high": 113002,
+      "low": 112568,
+      "open": 112892,
+      "time": 1756094400,
+      "volume": 7277
+    },
+    {
+      "close": 112953.5,
+      "high": 113619,
+      "low": 112953.5,
+      "open": 113363,
+      "time": 1756090800,
+      "volume": 5718
+    },
+    {
+      "close": 113389,
+      "high": 113583.5,
+      "low": 113023,
+      "open": 113023,
+      "time": 1756087200,
+      "volume": 5235
+    },
+    {
+      "close": 113024.5,
+      "high": 113095.5,
+      "low": 112581.5,
+      "open": 112599.5,
+      "time": 1756083600,
+      "volume": 4855
+    },
+    {
+      "close": 112553,
+      "high": 113478,
+      "low": 112120.5,
+      "open": 113423.5,
+      "time": 1756080000,
+      "volume": 9751
+    },
+    {
+      "close": 113449.5,
+      "high": 113619,
+      "low": 113325.5,
+      "open": 113385.5,
+      "time": 1756076400,
+      "volume": 4942
+    },
+    {
+      "close": 113410,
+      "high": 113447.5,
+      "low": 112584,
+      "open": 113015.5,
+      "time": 1756072800,
+      "volume": 8431
+    },
+    {
+      "close": 112906.5,
+      "high": 113352.5,
+      "low": 112375,
+      "open": 112683,
+      "time": 1756069200,
+      "volume": 16404
+    },
+    {
+      "close": 112710.5,
+      "high": 112927,
+      "low": 111595.5,
+      "open": 112543.5,
+      "time": 1756065600,
+      "volume": 32857
+    },
+    {
+      "close": 112498,
+      "high": 114755,
+      "low": 110758.5,
+      "open": 114571,
+      "time": 1756062000,
+      "volume": 160824
+    },
+    {
+      "close": 114518,
+      "high": 114853.5,
+      "low": 114285,
+      "open": 114364,
+      "time": 1756058400,
+      "volume": 26942
+    },
+    {
+      "close": 114394.5,
+      "high": 114521.5,
+      "low": 114220,
+      "open": 114220,
+      "time": 1756054800,
+      "volume": 12566
+    },
+    {
+      "close": 114246,
+      "high": 114498.5,
+      "low": 114246,
+      "open": 114353,
+      "time": 1756051200,
+      "volume": 9168
+    },
+    {
+      "close": 114369.5,
+      "high": 114799.5,
+      "low": 114369.5,
+      "open": 114464,
+      "time": 1756047600,
+      "volume": 9700
+    },
+    {
+      "close": 114491,
+      "high": 114626.5,
+      "low": 114305.5,
+      "open": 114533,
+      "time": 1756044000,
+      "volume": 32736
+    },
+    {
+      "close": 114516.5,
+      "high": 114802,
+      "low": 114516.5,
+      "open": 114609.5,
+      "time": 1756040400,
+      "volume": 8507
+    },
+    {
+      "close": 114634,
+      "high": 114766.5,
+      "low": 114539.5,
+      "open": 114652,
+      "time": 1756036800,
+      "volume": 3705
+    },
+    {
+      "close": 114685,
+      "high": 114854.5,
+      "low": 114581.5,
+      "open": 114715,
+      "time": 1756033200,
+      "volume": 4349
+    },
+    {
+      "close": 114760,
+      "high": 114926.5,
+      "low": 114574.5,
+      "open": 114814.5,
+      "time": 1756029600,
+      "volume": 4964
+    },
+    {
+      "close": 114817.5,
+      "high": 115023.5,
+      "low": 114648.5,
+      "open": 114819.5,
+      "time": 1756026000,
+      "volume": 5137
+    },
+    {
+      "close": 114810.5,
+      "high": 114936,
+      "low": 114727,
+      "open": 114851,
+      "time": 1756022400,
+      "volume": 4624
+    },
+    {
+      "close": 114852,
+      "high": 115080.5,
+      "low": 114832.5,
+      "open": 114839.5,
+      "time": 1756018800,
+      "volume": 3256
+    },
+    {
+      "close": 114833,
+      "high": 115024.5,
+      "low": 114803,
+      "open": 114962,
+      "time": 1756015200,
+      "volume": 6359
+    },
+    {
+      "close": 114963,
+      "high": 115170.5,
+      "low": 114901.5,
+      "open": 115119.5,
+      "time": 1756011600,
+      "volume": 5177
+    },
+    {
+      "close": 115121,
+      "high": 115242,
+      "low": 115017,
+      "open": 115017,
+      "time": 1756008000,
+      "volume": 3281
+    },
+    {
+      "close": 114997.5,
+      "high": 115102,
+      "low": 114884,
+      "open": 114962.5,
+      "time": 1756004400,
+      "volume": 5061
+    },
+    {
+      "close": 114962.5,
+      "high": 115639,
+      "low": 114962.5,
+      "open": 115418.5,
+      "time": 1756000800,
+      "volume": 7424
+    },
+    {
+      "close": 115420.5,
+      "high": 115518,
+      "low": 115139,
+      "open": 115325,
+      "time": 1755997200,
+      "volume": 4072
+    },
+    {
+      "close": 115327,
+      "high": 115486.5,
+      "low": 115256,
+      "open": 115351,
+      "time": 1755993600,
+      "volume": 5855
+    },
+    {
+      "close": 115360,
+      "high": 115362,
+      "low": 115184.5,
+      "open": 115250,
+      "time": 1755990000,
+      "volume": 4602
+    },
+    {
+      "close": 115250,
+      "high": 115250,
+      "low": 114965,
+      "open": 114965,
+      "time": 1755986400,
+      "volume": 3765
+    },
+    {
+      "close": 114986,
+      "high": 115265.5,
+      "low": 114939.5,
+      "open": 115265.5,
+      "time": 1755982800,
+      "volume": 4065
+    },
+    {
+      "close": 115265.5,
+      "high": 115265.5,
+      "low": 115054,
+      "open": 115100,
+      "time": 1755979200,
+      "volume": 4132
+    },
+    {
+      "close": 115075,
+      "high": 115116,
+      "low": 115000.5,
+      "open": 115085.5,
+      "time": 1755975600,
+      "volume": 2974
+    },
+    {
+      "close": 115085.5,
+      "high": 115141.5,
+      "low": 114990,
+      "open": 115068.5,
+      "time": 1755972000,
+      "volume": 2392
+    },
+    {
+      "close": 115036,
+      "high": 115114,
+      "low": 114904.5,
+      "open": 114957.5,
+      "time": 1755968400,
+      "volume": 3135
+    },
+    {
+      "close": 114958.5,
+      "high": 115022.5,
+      "low": 114622.5,
+      "open": 114763.5,
+      "time": 1755964800,
+      "volume": 4988
+    },
+    {
+      "close": 114783,
+      "high": 114895.5,
+      "low": 114541.5,
+      "open": 114585,
+      "time": 1755961200,
+      "volume": 3129
+    },
+    {
+      "close": 114567.5,
+      "high": 115038.5,
+      "low": 114556,
+      "open": 114778,
+      "time": 1755957600,
+      "volume": 3903
+    },
+    {
+      "close": 114809,
+      "high": 115143.5,
+      "low": 114713.5,
+      "open": 115143.5,
+      "time": 1755954000,
+      "volume": 4222
+    },
+    {
+      "close": 115160,
+      "high": 115418.5,
+      "low": 115131,
+      "open": 115227,
+      "time": 1755950400,
+      "volume": 1590
+    },
+    {
+      "close": 115182.5,
+      "high": 115582.5,
+      "low": 115173.5,
+      "open": 115493,
+      "time": 1755946800,
+      "volume": 1417
+    },
+    {
+      "close": 115569,
+      "high": 115713,
+      "low": 115566,
+      "open": 115690.5,
+      "time": 1755943200,
+      "volume": 1440
+    },
+    {
+      "close": 115701.5,
+      "high": 115737.5,
+      "low": 115568.5,
+      "open": 115705,
+      "time": 1755939600,
+      "volume": 2398
+    },
+    {
+      "close": 115703.5,
+      "high": 115834.5,
+      "low": 115579.5,
+      "open": 115764,
+      "time": 1755936000,
+      "volume": 910
+    },
+    {
+      "close": 115730.5,
+      "high": 115877,
+      "low": 115626.5,
+      "open": 115732,
+      "time": 1755932400,
+      "volume": 1531
+    }
+  ]
+}

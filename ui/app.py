@@ -130,6 +130,7 @@ st.sidebar.subheader("📍 Navigation")
 # Create navigation buttons that redirect to pages
 nav_options = {
     "🏠 Dashboard": "ui/app.py",
+    "📊 CSV Import": "pages/06_CSV_Import.py",
     "📝 Add Trade": "pages/01_Add_Trade.py", 
     "🧠 Psychology Journal": "pages/02_Psychology_Journal.py",
     "📊 Analytics Dashboard": "pages/03_Analytics_Dashboard.py",
@@ -303,20 +304,20 @@ try:
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
-            if st.button("📝 Add Trade", type="primary"):
-                st.info("Navigate to 'Add Trade' page using the sidebar")
+            if st.button("📊 Import CSV", type="primary"):
+                st.info("Navigate to 'CSV Import' page using the sidebar to import your historical trading data")
         
         with col2:
+            if st.button("📝 Add Trade"):
+                st.info("Navigate to 'Add Trade' page using the sidebar")
+        
+        with col3:
             if st.button("📊 View Analytics"):
                 st.info("Navigate to 'Analytics Dashboard' page using the sidebar")
         
-        with col3:
+        with col4:
             if st.button("🤖 AI Coaching"):
                 st.info("Navigate to 'AI Coaching' page using the sidebar")
-        
-        with col4:
-            if st.button("🔄 Sync Delta"):
-                st.info("Navigate to 'Delta Exchange' page using the sidebar")
     
     else:
         # Welcome screen for new users
