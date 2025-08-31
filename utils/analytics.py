@@ -261,7 +261,7 @@ class TradingAnalytics:
                     y=df['drawdown'],
                     mode='lines',
                     name='Drawdown ($)',
-                    fill='tonegative',
+                    fill='tonexty',
                     line=dict(color='#EF553B', width=1),
                     fillcolor='rgba(239, 85, 59, 0.3)',
                     hovertemplate='<b>Date:</b> %{x}<br><b>Drawdown:</b> $%{y:,.2f}<extra></extra>'
@@ -276,7 +276,7 @@ class TradingAnalytics:
                     y=df['drawdown_pct'],
                     mode='lines',
                     name='Drawdown (%)',
-                    fill='tonegative',
+                    fill='tonexty',
                     line=dict(color='#AB63FA', width=1),
                     fillcolor='rgba(171, 99, 250, 0.3)',
                     hovertemplate='<b>Date:</b> %{x}<br><b>Drawdown:</b> %{y:.2f}%<extra></extra>'

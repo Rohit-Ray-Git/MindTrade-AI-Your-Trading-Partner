@@ -83,6 +83,12 @@ class TradeDAL:
         
         return query.order_by(desc(Trade.trade_time)).offset(offset).limit(limit).all()
     
+    def get_trades_since(self, cutoff_date: datetime) -> List[Trade]:
+        """Get trades since a specific date"""
+        return self.db.query(Trade).filter(
+            Trade.entry_time >= cutoff_date
+        ).order_by(desc(Trade.entry_time)).all()
+    
     def update_trade(self, trade_id: int, trade_data: Dict[str, Any]) -> Optional[Trade]:
         """Update trade"""
         trade = self.get_trade(trade_id)
@@ -140,7 +146,25 @@ class PsychologyDAL:
     def create_psychology_note(self, note_data: Dict[str, Any]) -> PsychologyNote:
         """Create psychology note"""
         try:
-            note = PsychologyNote(**note_data)
+            # Extract only the fields that exist in the PsychologyNote model
+            valid_fields = {
+                'trade_id': note_data.get('trade_id'),
+                'note_text': note_data.get('note_text'),
+                'self_tags': note_data.get('self_tags'),
+                'nlp_tags': note_data.get('nlp_tags'),
+                'sentiment_score': note_data.get('sentiment_score'),
+                'confidence_score': note_data.get('confidence_score'),
+                'fear_score': note_data.get('fear_score'),
+                'greed_score': note_data.get('greed_score'),
+                'patience_score': note_data.get('patience_score'),
+                'fomo_score': note_data.get('fomo_score'),
+                'revenge_score': note_data.get('revenge_score')
+            }
+            
+            # Remove None values
+            valid_fields = {k: v for k, v in valid_fields.items() if v is not None}
+            
+            note = PsychologyNote(**valid_fields)
             self.db.add(note)
             self.db.commit()
             self.db.refresh(note)
@@ -153,6 +177,14 @@ class PsychologyDAL:
     def get_psychology_notes(self, trade_id: int) -> List[PsychologyNote]:
         """Get psychology notes for a trade"""
         return self.db.query(PsychologyNote).filter(PsychologyNote.trade_id == trade_id).all()
+    
+    def get_recent_notes(self, limit: int = 10) -> List[PsychologyNote]:
+        """Get the most recent psychology notes"""
+        return self.db.query(PsychologyNote).order_by(desc(PsychologyNote.created_at)).limit(limit).all()
+    
+    def create_note(self, note_data: Dict[str, Any]) -> PsychologyNote:
+        """Create a psychology note (alias for create_psychology_note)"""
+        return self.create_psychology_note(note_data)
     
     def update_psychology_note(self, note_id: int, note_data: Dict[str, Any]) -> Optional[PsychologyNote]:
         """Update psychology note"""
@@ -182,6 +214,10 @@ class SetupDAL:
     def get_setups(self) -> List[Setup]:
         """Get all setups"""
         return self.db.query(Setup).all()
+    
+    def get_all_setups(self) -> List[Setup]:
+        """Get all setups (alias for get_setups)"""
+        return self.get_setups()
     
     def get_setup(self, setup_id: int) -> Optional[Setup]:
         """Get setup by ID"""
@@ -263,7 +299,7 @@ class AnalyticsDAL:
             'losing_trades': losing_trades,
             'win_rate': win_rate,
             'total_pnl': total_pnl,
-            'avg_pnl': avg_pnl,
+            'avg_pnl_per_trade': avg_pnl,
             'avg_r_multiple': avg_r_multiple,
             'max_drawdown': max_drawdown,
             'profit_factor': profit_factor

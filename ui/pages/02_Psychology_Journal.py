@@ -58,11 +58,17 @@ with st.form("psychology_form"):
         recent_trades = trade_dal.get_trades(limit=1)
         trade_id = recent_trades[0].id if recent_trades else None
         
+        # Convert confidence level to confidence score (0-1 scale)
+        confidence_score = confidence_level / 10.0
+        
+        # Create tags based on emotional state
+        emotional_tags = [emotional_state.lower()]
+        
         note_data = {
             'trade_id': trade_id,
             'note_text': note_text,
-            'confidence_level': confidence_level,
-            'emotional_state': emotional_state
+            'confidence_score': confidence_score,
+            'self_tags': emotional_tags
         }
         
         try:
@@ -109,10 +115,14 @@ if recent_notes:
     for note in recent_notes:
         with st.expander(f"Note from {note.created_at.strftime('%Y-%m-%d %H:%M')}"):
             st.write(note.note_text)
-            if hasattr(note, 'confidence_level'):
-                st.write(f"**Confidence:** {note.confidence_level}/10")
-            if hasattr(note, 'emotional_state'):
-                st.write(f"**Emotional State:** {note.emotional_state}")
+            if note.confidence_score is not None:
+                confidence_level = int(note.confidence_score * 10)
+                st.write(f"**Confidence:** {confidence_level}/10")
+            if note.self_tags:
+                st.write(f"**Tags:** {', '.join(note.self_tags)}")
+            if note.sentiment_score is not None:
+                sentiment_emoji = "😊" if note.sentiment_score > 0 else "😔" if note.sentiment_score < 0 else "😐"
+                st.write(f"**Sentiment:** {sentiment_emoji} {note.sentiment_score:.2f}")
 else:
     st.info("No psychology notes yet. Start by adding your thoughts and feelings about trades!")
 

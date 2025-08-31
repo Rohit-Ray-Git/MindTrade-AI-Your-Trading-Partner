@@ -45,68 +45,199 @@ ai_engine, analytics_engine = get_components()
 # Custom CSS for enhanced styling
 st.markdown("""
 <style>
+/* Professional Color Scheme */
+:root {
+    --primary-color: #1e3a8a;
+    --secondary-color: #3b82f6;
+    --accent-color: #06b6d4;
+    --success-color: #059669;
+    --warning-color: #d97706;
+    --danger-color: #dc2626;
+    --light-bg: #f8fafc;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+}
+
+/* Main Header */
 .main-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem;
-    border-radius: 15px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    padding: 2.5rem;
+    border-radius: 16px;
     color: white;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(30, 58, 138, 0.15);
+    text-align: center;
 }
 
+.main-header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.main-header p {
+    margin: 0;
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* Metric Cards */
 .metric-card {
-    background: linear-gradient(145deg, #f0f2f6, #ffffff);
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin: 0.5rem 0;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.metric-card h3 {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 0.5rem 0;
+}
+
+.metric-card h2 {
+    color: var(--text-primary);
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Trade Cards */
+.trade-card {
+    background: var(--card-bg);
     padding: 1.5rem;
     border-radius: 12px;
-    border-left: 5px solid #667eea;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 0.5rem 0;
-}
-
-.trade-card {
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-    margin: 0.5rem 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.info-card {
-    background: linear-gradient(145deg, #d1ecf1, #ffffff);
-    border: 1px solid #bee5eb;
-    border-radius: 10px;
-    padding: 1.5rem;
-    margin: 1rem 0;
+    border: 1px solid var(--border-color);
+    margin: 0.75rem 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
+.trade-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Info Cards */
+.info-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, var(--card-bg) 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Status Indicators */
 .status-indicator {
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    margin-right: 5px;
+    margin-right: 8px;
 }
 
-.status-online { background-color: #28a745; }
-.status-offline { background-color: #dc3545; }
-.status-warning { background-color: #ffc107; }
+.status-online { background-color: var(--success-color); }
+.status-offline { background-color: var(--danger-color); }
+.status-warning { background-color: var(--warning-color); }
 
-/* Page navigation styling */
+/* Navigation Styling */
 .nav-link {
-    color: #495057;
+    color: var(--text-primary);
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    margin: 0.2rem 0;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin: 0.25rem 0;
     display: block;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 .nav-link:hover {
-    background-color: #e9ecef;
-    color: #667eea;
+    background-color: var(--light-bg);
+    color: var(--primary-color);
+    transform: translateX(4px);
+}
+
+/* Section Headers */
+.section-header {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+/* Performance Grid */
+.performance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+/* Success/Error Messages */
+.success-message {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border: 1px solid #a7f3d0;
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1rem 0;
+    color: var(--success-color);
+}
+
+.error-message {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border: 1px solid #fca5a5;
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1rem 0;
+    color: var(--danger-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .metric-card {
+        padding: 1.5rem;
+    }
+    
+    .metric-card h2 {
+        font-size: 1.5rem;
+    }
+    
+    .main-header {
+        padding: 2rem;
+    }
+    
+    .main-header h1 {
+        font-size: 2rem;
+    }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -114,23 +245,31 @@ st.markdown("""
 # Header
 st.markdown("""
 <div class="main-header">
-    <h1>🧠 MindTrade AI - Your Trading Partner</h1>
-    <p>Advanced AI-powered trading journal with multi-agent analysis, pattern recognition, and personalized coaching.</p>
-    <p>🚀 <strong>Complete System:</strong> Analytics Dashboard | AI Coaching | Delta Exchange Integration | Psychology Tracking</p>
+    <h1>🧠 MindTrade AI</h1>
+    <p>Advanced AI-powered trading journal with multi-agent analysis, pattern recognition, and personalized coaching</p>
+    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 1rem;">
+        <strong>Complete System:</strong> Analytics Dashboard • AI Coaching • Delta Exchange Integration • Psychology Tracking
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
 # Enhanced Sidebar
-st.sidebar.title("🧠 MindTrade AI")
+st.sidebar.markdown("""
+<div style="text-align: center; padding: 1rem 0;">
+    <h2 style="color: #1e3a8a; margin: 0;">🧠 MindTrade AI</h2>
+    <p style="color: #64748b; font-size: 0.9rem; margin: 0.5rem 0;">Your AI Trading Partner</p>
+</div>
+""", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
 # Page Navigation
-st.sidebar.subheader("📍 Navigation")
+st.sidebar.markdown('<h3 style="color: #1e3a8a; font-size: 1rem;">📍 Navigation</h3>', unsafe_allow_html=True)
 
 # Create navigation buttons that redirect to pages
 nav_options = {
     "🏠 Dashboard": "ui/app.py",
     "📊 CSV Import": "pages/06_CSV_Import.py",
+    "📈 Historical Analysis": "pages/07_Historical_Analysis.py",
     "📝 Add Trade": "pages/01_Add_Trade.py", 
     "🧠 Psychology Journal": "pages/02_Psychology_Journal.py",
     "📊 Analytics Dashboard": "pages/03_Analytics_Dashboard.py",
@@ -152,7 +291,7 @@ for page_name, page_path in nav_options.items():
 
 # Quick Stats in Sidebar
 st.sidebar.markdown("---")
-st.sidebar.subheader("📊 Quick Stats")
+st.sidebar.markdown('<h3 style="color: #1e3a8a; font-size: 1rem;">📊 Quick Stats</h3>', unsafe_allow_html=True)
 
 try:
     db = get_db_session()
@@ -188,7 +327,7 @@ try:
     summary = analytics_dal.get_trading_summary()
     
     if summary['total_trades'] > 0:
-        st.subheader("📈 Performance Overview")
+        st.markdown('<h2 class="section-header">📈 Performance Overview</h2>', unsafe_allow_html=True)
         
         # Key metrics in enhanced cards
         col1, col2, col3, col4, col5 = st.columns(5)
@@ -197,12 +336,12 @@ try:
             st.markdown(f"""
             <div class="metric-card">
                 <h3>📊 Total Trades</h3>
-                <h2>{summary['total_trades']}</h2>
+                <h2>{summary['total_trades']:,}</h2>
             </div>
             """, unsafe_allow_html=True)
         
         with col2:
-            win_rate_color = "#28a745" if summary['win_rate'] >= 60 else "#ffc107" if summary['win_rate'] >= 50 else "#dc3545"
+            win_rate_color = "#059669" if summary['win_rate'] >= 60 else "#d97706" if summary['win_rate'] >= 50 else "#dc2626"
             st.markdown(f"""
             <div class="metric-card">
                 <h3>🎯 Win Rate</h3>
@@ -211,74 +350,84 @@ try:
             """, unsafe_allow_html=True)
         
         with col3:
-            pnl_color = "#28a745" if summary['total_pnl'] >= 0 else "#dc3545"
+            pnl_color = "#059669" if summary['total_pnl'] >= 0 else "#dc2626"
             st.markdown(f"""
             <div class="metric-card">
                 <h3>💰 Total P&L</h3>
-                <h2 style="color: {pnl_color}">${summary['total_pnl']:.2f}</h2>
+                <h2 style="color: {pnl_color}">${summary['total_pnl']:,.2f}</h2>
             </div>
             """, unsafe_allow_html=True)
         
         with col4:
-            avg_pnl_color = "#28a745" if summary['avg_pnl_per_trade'] >= 0 else "#dc3545"
+            avg_pnl_color = "#059669" if summary['avg_pnl_per_trade'] >= 0 else "#dc2626"
             st.markdown(f"""
             <div class="metric-card">
                 <h3>📊 Avg per Trade</h3>
-                <h2 style="color: {avg_pnl_color}">${summary['avg_pnl_per_trade']:.2f}</h2>
+                <h2 style="color: {avg_pnl_color}">${summary['avg_pnl_per_trade']:,.2f}</h2>
             </div>
             """, unsafe_allow_html=True)
         
         with col5:
+            r_color = "#059669" if summary.get('avg_r_multiple', 0) > 0 else "#dc2626"
             st.markdown(f"""
             <div class="metric-card">
                 <h3>📈 R-Multiple</h3>
-                <h2>{summary.get('avg_r_multiple', 0):.2f}R</h2>
+                <h2 style="color: {r_color}">{summary.get('avg_r_multiple', 0):.2f}R</h2>
             </div>
             """, unsafe_allow_html=True)
         
         # Recent Performance
-        st.subheader("📊 Recent Performance")
+        st.markdown('<h2 class="section-header">📊 Recent Performance</h2>', unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown("### 🔥 This Week")
+            st.markdown("""
+            <div class="metric-card">
+                <h3>🔥 This Week</h3>
+            """, unsafe_allow_html=True)
             week_summary = analytics_dal.get_trading_summary(
                 start_date=datetime.now() - timedelta(days=7)
             )
             
-            st.write(f"**Trades:** {week_summary['total_trades']}")
-            st.write(f"**P&L:** ${week_summary['total_pnl']:.2f}")
-            st.write(f"**Win Rate:** {week_summary['win_rate']:.1f}%")
+            st.metric("Trades", week_summary['total_trades'])
+            st.metric("P&L", f"${week_summary['total_pnl']:,.2f}")
+            st.metric("Win Rate", f"{week_summary['win_rate']:.1f}%")
+            st.markdown("</div>", unsafe_allow_html=True)
         
         with col2:
-            st.markdown("### 📅 This Month")
+            st.markdown("""
+            <div class="metric-card">
+                <h3>📅 This Month</h3>
+            """, unsafe_allow_html=True)
             month_summary = analytics_dal.get_trading_summary(
                 start_date=datetime.now() - timedelta(days=30)
             )
             
-            st.write(f"**Trades:** {month_summary['total_trades']}")
-            st.write(f"**P&L:** ${month_summary['total_pnl']:.2f}")
-            st.write(f"**Win Rate:** {month_summary['win_rate']:.1f}%")
+            st.metric("Trades", month_summary['total_trades'])
+            st.metric("P&L", f"${month_summary['total_pnl']:,.2f}")
+            st.metric("Win Rate", f"{month_summary['win_rate']:.1f}%")
+            st.markdown("</div>", unsafe_allow_html=True)
         
         # Recent trades with enhanced display
-        st.subheader("📋 Recent Trades")
+        st.markdown('<h2 class="section-header">📋 Recent Trades</h2>', unsafe_allow_html=True)
         recent_trades = trade_dal.get_trades(limit=10)
         
         if recent_trades:
             for i, trade in enumerate(recent_trades[:5]):  # Show top 5 with cards
                 pnl_emoji = "🟢" if trade.pnl and trade.pnl > 0 else "🔴" if trade.pnl and trade.pnl < 0 else "⚪"
+                pnl_color = "#059669" if trade.pnl and trade.pnl > 0 else "#dc2626" if trade.pnl and trade.pnl < 0 else "#64748b"
                 
                 st.markdown(f"""
                 <div class="trade-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <strong>{pnl_emoji} {trade.symbol} {trade.direction}</strong><br>
-                            <small>{trade.entry_time.strftime('%Y-%m-%d %H:%M') if trade.entry_time else 'Unknown'}</small>
+                            <strong style="font-size: 1.1rem;">{pnl_emoji} {trade.symbol} {trade.direction}</strong><br>
+                            <small style="color: #64748b;">{trade.entry_time.strftime('%Y-%m-%d %H:%M') if trade.entry_time else 'Unknown'}</small>
                         </div>
                         <div style="text-align: right;">
-                            <strong style="color: {'#28a745' if trade.pnl and trade.pnl > 0 else '#dc3545' if trade.pnl and trade.pnl < 0 else '#6c757d'}">${trade.pnl:.2f}</strong><br>
-                            <small>{trade.r_multiple:.2f}R</small>
+                            <strong style="color: {pnl_color}; font-size: 1.2rem;">${trade.pnl:,.2f}</strong><br>
+                            <small style="color: #64748b;">{trade.r_multiple:.2f}R</small>
                         </div>
                     </div>
                 </div>
@@ -300,53 +449,69 @@ try:
                     st.dataframe(trades_df, use_container_width=True, hide_index=True)
         
         # Quick Actions
-        st.subheader("⚡ Quick Actions")
-        col1, col2, col3, col4 = st.columns(4)
+        st.markdown('<h2 class="section-header">⚡ Quick Actions</h2>', unsafe_allow_html=True)
+        
+        # Create a grid of action buttons
+        st.markdown("""
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
+        """, unsafe_allow_html=True)
+        
+        col1, col2, col3, col4, col5 = st.columns(5)
         
         with col1:
-            if st.button("📊 Import CSV", type="primary"):
+            if st.button("📊 Import CSV", type="primary", use_container_width=True):
                 st.info("Navigate to 'CSV Import' page using the sidebar to import your historical trading data")
         
         with col2:
-            if st.button("📝 Add Trade"):
+            if st.button("📝 Add Trade", use_container_width=True):
                 st.info("Navigate to 'Add Trade' page using the sidebar")
         
         with col3:
-            if st.button("📊 View Analytics"):
-                st.info("Navigate to 'Analytics Dashboard' page using the sidebar")
+            if st.button("📈 Historical Analysis", use_container_width=True):
+                st.info("Navigate to 'Historical Analysis' page using the sidebar")
         
         with col4:
-            if st.button("🤖 AI Coaching"):
+            if st.button("📊 View Analytics", use_container_width=True):
+                st.info("Navigate to 'Analytics Dashboard' page using the sidebar")
+        
+        with col5:
+            if st.button("🤖 AI Coaching", use_container_width=True):
                 st.info("Navigate to 'AI Coaching' page using the sidebar")
+        
+        st.markdown("</div>", unsafe_allow_html=True)
     
     else:
         # Welcome screen for new users
         st.markdown("""
         <div class="info-card">
-            <h2>🎉 Welcome to MindTrade AI!</h2>
-            <p>Your intelligent trading companion is ready to help you improve your trading performance.</p>
+            <h2 style="color: #1e3a8a; margin-bottom: 1rem;">🎉 Welcome to MindTrade AI!</h2>
+            <p style="font-size: 1.1rem; color: #374151;">Your intelligent trading companion is ready to help you improve your trading performance.</p>
         </div>
         """, unsafe_allow_html=True)
         
-        st.subheader("🚀 Getting Started")
+        st.markdown('<h2 class="section-header">🚀 Getting Started</h2>', unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         
         with col1:
             st.markdown("""
-            ### 1️⃣ Add Your First Trade
-            Start by logging your trades to begin tracking performance.
-            """)
-            if st.button("📝 Add Trade", type="primary"):
+            <div class="metric-card">
+                <h3>1️⃣ Add Your First Trade</h3>
+                <p style="color: #64748b; margin: 1rem 0;">Start by logging your trades to begin tracking performance.</p>
+            """, unsafe_allow_html=True)
+            if st.button("📝 Add Trade", type="primary", use_container_width=True):
                 st.info("Navigate to 'Add Trade' page using the sidebar")
+            st.markdown("</div>", unsafe_allow_html=True)
         
         with col2:
             st.markdown("""
-            ### 2️⃣ Connect Delta Exchange
-            Automatically sync trades from your exchange.
-            """)
-            if st.button("🔄 Setup Delta Exchange"):
+            <div class="metric-card">
+                <h3>2️⃣ Connect Delta Exchange</h3>
+                <p style="color: #64748b; margin: 1rem 0;">Automatically sync trades from your exchange.</p>
+            """, unsafe_allow_html=True)
+            if st.button("🔄 Setup Delta Exchange", use_container_width=True):
                 st.info("Navigate to 'Delta Exchange' page using the sidebar")
+            st.markdown("</div>", unsafe_allow_html=True)
         
         st.markdown("""
         ### 🎯 What MindTrade AI Can Do:
@@ -396,12 +561,20 @@ try:
     db.close()
 
 except Exception as e:
-    st.error(f"Error loading dashboard data: {e}")
-    st.info("Please check your database configuration and try again.")
+    st.markdown(f"""
+    <div class="error-message">
+        <strong>⚠️ Error loading dashboard data:</strong> {str(e)}
+    </div>
+    """, unsafe_allow_html=True)
+    st.markdown("""
+    <div class="success-message">
+        <strong>💡 Tip:</strong> Please check your database configuration and try again.
+    </div>
+    """, unsafe_allow_html=True)
 
 # Enhanced Sidebar Status
 st.sidebar.markdown("---")
-st.sidebar.subheader("🔌 System Status")
+st.sidebar.markdown('<h3 style="color: #1e3a8a; font-size: 1rem;">🔌 System Status</h3>', unsafe_allow_html=True)
 
 # Status indicators with colors
 status_items = [
@@ -413,25 +586,41 @@ status_items = [
 ]
 
 for item, status in status_items:
-    st.sidebar.markdown(f"{status} {item}")
+    st.sidebar.markdown(f"<div style='padding: 0.25rem 0;'>{status} {item}</div>", unsafe_allow_html=True)
 
 # System info
 st.sidebar.markdown("---")
-st.sidebar.markdown("**🧠 MindTrade AI v2.0**")
-st.sidebar.markdown("*Your AI-powered trading companion*")
+st.sidebar.markdown("""
+<div style="text-align: center; padding: 1rem 0;">
+    <p style="color: #1e3a8a; font-weight: 600; margin: 0;">🧠 MindTrade AI v2.0</p>
+    <p style="color: #64748b; font-size: 0.8rem; margin: 0.5rem 0;">Your AI-powered trading companion</p>
+</div>
+""", unsafe_allow_html=True)
 
 if ai_engine.enabled:
-    st.sidebar.success("✅ AI Ready")
+    st.sidebar.markdown("""
+    <div class="success-message" style="margin: 0.5rem 0;">
+        ✅ AI Ready
+    </div>
+    """, unsafe_allow_html=True)
 else:
-    st.sidebar.warning("⚠️ Configure AI")
+    st.sidebar.markdown("""
+    <div class="error-message" style="margin: 0.5rem 0;">
+        ⚠️ Configure AI
+    </div>
+    """, unsafe_allow_html=True)
 
-st.sidebar.caption("Built with ❤️ using Streamlit & Google Gemini")
+st.sidebar.markdown("""
+<div style="text-align: center; color: #64748b; font-size: 0.8rem; padding: 1rem 0;">
+    Built with ❤️ using Streamlit & Google Gemini
+</div>
+""", unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
 st.markdown("""
-<div style='text-align: center; color: #666; padding: 1rem;'>
-    <strong>MindTrade AI</strong> - Elevating Trading Performance Through Artificial Intelligence<br>
-    <small>🚀 Complete analytics • 🤖 AI coaching • 📊 Performance tracking • 🧠 Psychology insights</small>
+<div style='text-align: center; color: #64748b; padding: 2rem; background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); border-radius: 12px; margin-top: 2rem;'>
+    <strong style="color: #1e3a8a; font-size: 1.1rem;">MindTrade AI</strong> - Elevating Trading Performance Through Artificial Intelligence<br>
+    <small style="color: #64748b; margin-top: 0.5rem; display: block;">🚀 Complete analytics • 🤖 AI coaching • 📊 Performance tracking • 🧠 Psychology insights</small>
 </div>
 """, unsafe_allow_html=True)
