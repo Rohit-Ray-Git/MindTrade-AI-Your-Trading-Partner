@@ -36,16 +36,24 @@ class DeltaCSVImporter:
             
             print(f"📋 Detected columns: {columns}")
             
-            # Common Delta Exchange CSV column patterns
+            # Delta Exchange CSV column patterns (updated for your format)
             column_mappings = {
-                'symbol': self._find_column(columns, ['symbol', 'instrument', 'product', 'pair']),
+                'symbol': self._find_column(columns, ['contract', 'symbol', 'instrument', 'product', 'pair']),
                 'side': self._find_column(columns, ['side', 'direction', 'type', 'buy_sell']),
-                'quantity': self._find_column(columns, ['quantity', 'size', 'amount', 'qty']),
-                'price': self._find_column(columns, ['price', 'fill_price', 'execution_price', 'avg_price']),
-                'timestamp': self._find_column(columns, ['timestamp', 'time', 'created_at', 'execution_time', 'date']),
-                'pnl': self._find_column(columns, ['pnl', 'profit_loss', 'realized_pnl', 'pl']),
-                'fees': self._find_column(columns, ['fees', 'commission', 'cost', 'fee']),
-                'order_id': self._find_column(columns, ['order_id', 'id', 'trade_id', 'fill_id'])
+                'quantity': self._find_column(columns, ['qty', 'quantity', 'size', 'amount']),
+                'exec_price': self._find_column(columns, ['exec. price', 'exec_price', 'execution_price', 'price', 'fill_price', 'avg_price']),
+                'order_price': self._find_column(columns, ['order price', 'order_price', 'limit_price']),
+                'stop_price': self._find_column(columns, ['stop price', 'stop_price', 'stop_loss']),
+                'timestamp': self._find_column(columns, ['time', 'timestamp', 'created_at', 'execution_time', 'date']),
+                'pnl': self._find_column(columns, ['realised p.', 'realised p&l', 'realised_pnl', 'realized_pnl', 'pnl', 'profit_loss', 'pl', 'realised p']),
+                'fees': self._find_column(columns, ['trading fe', 'trading_fee', 'fees', 'commission', 'cost', 'fee']),
+                'order_id': self._find_column(columns, ['order id', 'order_id', 'id', 'trade_id', 'fill_id']),
+                'client_order': self._find_column(columns, ['client orde', 'client_order', 'client_id']),
+                'order_type': self._find_column(columns, ['order type', 'order_type', 'type']),
+                'status': self._find_column(columns, ['status', 'state', 'order_status', 'filled/remaining']),
+                'explanation': self._find_column(columns, ['explanatio', 'explanation', 'notes', 'comment']),
+                'cashflow': self._find_column(columns, ['cashflow', 'cash_flow', 'net_amount']),
+                'order_value': self._find_column(columns, ['order valu', 'order_value', 'total_value'])
             }
             
             print(f"🎯 Column mappings detected:")
@@ -82,6 +90,8 @@ class DeltaCSVImporter:
             rename_map = {v: k for k, v in column_mappings.items() if v is not None}
             df = df.rename(columns=rename_map)
             
+            print(f"📋 Available columns after renaming: {list(df.columns)}")
+            
             # Clean and process data
             df = self._clean_data(df)
             
@@ -104,7 +114,7 @@ class DeltaCSVImporter:
             df = df.dropna(subset=['timestamp'])
         
         # Clean numeric columns
-        numeric_columns = ['quantity', 'price', 'pnl', 'fees']
+        numeric_columns = ['quantity', 'exec_price', 'order_price', 'stop_price', 'pnl', 'fees', 'cashflow', 'order_value']
         for col in numeric_columns:
             if col in df.columns:
                 df[col] = pd.to_numeric(df[col], errors='coerce')
@@ -114,10 +124,32 @@ class DeltaCSVImporter:
             df['side'] = df['side'].str.lower().str.strip()
             df['side'] = df['side'].map({'buy': 'long', 'sell': 'short', 'long': 'long', 'short': 'short'})
         
+        # Filter for completed trades only
+        if 'status' in df.columns:
+            # Debug: Show unique status values
+            unique_statuses = df['status'].unique()
+            print(f"🔍 Found status values: {unique_statuses}")
+            
+            # More flexible status filtering
+            valid_statuses = ['filled', 'complete', 'closed', 'done', 'executed', 'filled/remaining', 'partial', 'cancelled', 'pending']
+            df_filtered = df[df['status'].str.lower().isin(valid_statuses)]
+            
+            if len(df_filtered) == 0:
+                print(f"⚠️ No trades with expected status found. Keeping all trades.")
+                print(f"📊 Status distribution: {df['status'].value_counts().to_dict()}")
+            else:
+                df = df_filtered
+                print(f"✅ Filtered to valid trades: {len(df)} trades")
+        
         # Remove rows with missing critical data
-        critical_columns = ['symbol', 'side', 'quantity', 'price']
+        critical_columns = ['symbol', 'side', 'quantity', 'exec_price']
         available_critical = [col for col in critical_columns if col in df.columns]
-        df = df.dropna(subset=available_critical)
+        
+        if available_critical:
+            df = df.dropna(subset=available_critical)
+            print(f"✅ Removed rows with missing critical data: {available_critical}")
+        else:
+            print(f"⚠️ No critical columns found, keeping all data")
         
         cleaned_count = len(df)
         removed_count = original_count - cleaned_count
@@ -125,7 +157,15 @@ class DeltaCSVImporter:
         if removed_count > 0:
             print(f"⚠️ Removed {removed_count} invalid rows")
         
+        # If we have no data left, show warning but continue
+        if len(df) == 0:
+            print(f"⚠️ No data left after cleaning. This might indicate data format issues.")
+        
         return df
+        
+        return df
+    
+
     
     def analyze_trading_patterns(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Analyze trading patterns from historical data"""
@@ -228,16 +268,25 @@ class DeltaCSVImporter:
         
         for index, row in df.iterrows():
             try:
+                # Determine entry and exit prices based on available data
+                entry_price = float(row.get('exec_price', row.get('order_price', 0)))
+                exit_price = float(row.get('exec_price', 0))  # Use execution price as exit
+                
+                # Calculate P&L if not provided
+                pnl = row.get('pnl', 0)
+                if pd.isna(pnl) and 'cashflow' in row:
+                    pnl = float(row.get('cashflow', 0))
+                
                 trade_data = {
                     'symbol': row.get('symbol', 'UNKNOWN'),
                     'direction': row.get('side', 'long'),
                     'quantity': float(row.get('quantity', 0)),
-                    'entry_price': float(row.get('price', 0)),
-                    'exit_price': float(row.get('price', 0)),  # Same as entry for fills
-                    'stop_price': float(row.get('price', 0)) * 0.98,  # Estimate 2% stop
+                    'entry_price': entry_price,
+                    'exit_price': exit_price,
+                    'stop_price': float(row.get('stop_price', entry_price * 0.98)),  # Use actual stop or estimate
                     'account_equity': 10000.0,  # Default - will be updated
                     'risk_percent': 2.0,  # Default risk
-                    'pnl': float(row.get('pnl', 0)),
+                    'pnl': float(pnl) if not pd.isna(pnl) else 0.0,
                     'r_multiple': 0.0,  # Will be calculated
                     'trade_time': row.get('timestamp', datetime.now()),
                     'entry_time': row.get('timestamp', datetime.now()),
@@ -246,8 +295,8 @@ class DeltaCSVImporter:
                     'exchange': 'Delta Exchange',
                     'external_id': str(row.get('order_id', f"csv_{index}")),
                     'fees': float(row.get('fees', 0)),
-                    'logic': 'Imported from CSV - Historical Trade',
-                    'notes': f'Imported from Delta Exchange CSV on {datetime.now().strftime("%Y-%m-%d")}',
+                    'logic': f'Imported from CSV - Order Type: {row.get("order_type", "Unknown")} - Status: {row.get("status", "Unknown")}',
+                    'notes': f'Imported from Delta Exchange CSV on {datetime.now().strftime("%Y-%m-%d")}. {row.get("explanation", "")}',
                     'setup_id': default_setup_id
                 }
                 

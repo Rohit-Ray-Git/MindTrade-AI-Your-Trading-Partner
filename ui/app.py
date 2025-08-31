@@ -270,6 +270,8 @@ nav_options = {
     "🏠 Dashboard": "ui/app.py",
     "📊 CSV Import": "pages/06_CSV_Import.py",
     "📈 Historical Analysis": "pages/07_Historical_Analysis.py",
+    "🧠 Psychology Import": "pages/08_Psychology_Import.py",
+    "🔧 Trade Enhancer": "pages/09_Trade_Enhancer.py",
     "📝 Add Trade": "pages/01_Add_Trade.py", 
     "🧠 Psychology Journal": "pages/02_Psychology_Journal.py",
     "📊 Analytics Dashboard": "pages/03_Analytics_Dashboard.py",

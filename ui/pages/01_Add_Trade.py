@@ -56,8 +56,20 @@ with st.form("add_trade_form"):
         fees = st.number_input("Fees", min_value=0.0, format="%.2f")
         setup_name = st.selectbox("Setup", ["None"] + list(setup_options.keys()))
         
-    entry_time = st.datetime_input("Entry Time", value=datetime.now())
-    exit_time = st.datetime_input("Exit Time", value=datetime.now())
+    # Date and time inputs
+    col1, col2 = st.columns(2)
+    with col1:
+        entry_date = st.date_input("Entry Date", value=datetime.now().date())
+        entry_hour = st.selectbox("Entry Hour", range(24), index=datetime.now().hour)
+        entry_minute = st.selectbox("Entry Minute", range(60), index=datetime.now().minute)
+    with col2:
+        exit_date = st.date_input("Exit Date", value=datetime.now().date())
+        exit_hour = st.selectbox("Exit Hour", range(24), index=datetime.now().hour)
+        exit_minute = st.selectbox("Exit Minute", range(60), index=datetime.now().minute)
+    
+    # Combine date and time
+    entry_time = datetime.combine(entry_date, datetime.min.time().replace(hour=entry_hour, minute=entry_minute))
+    exit_time = datetime.combine(exit_date, datetime.min.time().replace(hour=exit_hour, minute=exit_minute))
     
     logic = st.text_area("Trade Logic", placeholder="Describe your reasoning for this trade...")
     
