@@ -85,10 +85,28 @@ class DeltaCSVImporter:
         try:
             df = pd.read_csv(csv_file_path)
             print(f"✅ Loaded {len(df)} rows")
+            print(f"📋 Original columns: {list(df.columns)}")
+            
+            # Show sample data for debugging
+            print(f"📊 Sample data (first 2 rows):")
+            print(df.head(2).to_string())
             
             # Rename columns based on mappings
             rename_map = {v: k for k, v in column_mappings.items() if v is not None}
+            print(f"🔄 Rename mapping: {rename_map}")
+            
+            # Debug: Show data before renaming
+            print(f"📊 Data before renaming - Shape: {df.shape}")
+            print(f"📊 Sample data before renaming:")
+            print(df.head(2).to_string())
+            
+            # Rename columns
             df = df.rename(columns=rename_map)
+            
+            # Debug: Show data after renaming
+            print(f"📊 Data after renaming - Shape: {df.shape}")
+            print(f"📊 Sample data after renaming:")
+            print(df.head(2).to_string())
             
             print(f"📋 Available columns after renaming: {list(df.columns)}")
             
@@ -103,66 +121,20 @@ class DeltaCSVImporter:
             return pd.DataFrame()
     
     def _clean_data(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Clean and validate CSV data"""
-        print("🧹 Cleaning data...")
+        """Store data as-is without cleaning"""
+        print("📦 Storing data as-is (no cleaning)...")
         
         original_count = len(df)
+        print(f"✅ Keeping all {original_count} rows without modification")
         
-        # Convert timestamp
-        if 'timestamp' in df.columns:
-            df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
-            df = df.dropna(subset=['timestamp'])
-        
-        # Clean numeric columns
-        numeric_columns = ['quantity', 'exec_price', 'order_price', 'stop_price', 'pnl', 'fees', 'cashflow', 'order_value']
-        for col in numeric_columns:
-            if col in df.columns:
-                df[col] = pd.to_numeric(df[col], errors='coerce')
-        
-        # Clean side/direction
+        # Just normalize side values for consistency (optional)
         if 'side' in df.columns:
+            print(f"🔄 Normalizing side values...")
             df['side'] = df['side'].str.lower().str.strip()
             df['side'] = df['side'].map({'buy': 'long', 'sell': 'short', 'long': 'long', 'short': 'short'})
+            print(f"✅ Side values normalized")
         
-        # Filter for completed trades only
-        if 'status' in df.columns:
-            # Debug: Show unique status values
-            unique_statuses = df['status'].unique()
-            print(f"🔍 Found status values: {unique_statuses}")
-            
-            # More flexible status filtering
-            valid_statuses = ['filled', 'complete', 'closed', 'done', 'executed', 'filled/remaining', 'partial', 'cancelled', 'pending']
-            df_filtered = df[df['status'].str.lower().isin(valid_statuses)]
-            
-            if len(df_filtered) == 0:
-                print(f"⚠️ No trades with expected status found. Keeping all trades.")
-                print(f"📊 Status distribution: {df['status'].value_counts().to_dict()}")
-            else:
-                df = df_filtered
-                print(f"✅ Filtered to valid trades: {len(df)} trades")
-        
-        # Remove rows with missing critical data
-        critical_columns = ['symbol', 'side', 'quantity', 'exec_price']
-        available_critical = [col for col in critical_columns if col in df.columns]
-        
-        if available_critical:
-            df = df.dropna(subset=available_critical)
-            print(f"✅ Removed rows with missing critical data: {available_critical}")
-        else:
-            print(f"⚠️ No critical columns found, keeping all data")
-        
-        cleaned_count = len(df)
-        removed_count = original_count - cleaned_count
-        
-        if removed_count > 0:
-            print(f"⚠️ Removed {removed_count} invalid rows")
-        
-        # If we have no data left, show warning but continue
-        if len(df) == 0:
-            print(f"⚠️ No data left after cleaning. This might indicate data format issues.")
-        
-        return df
-        
+        print(f"✅ Data stored as-is: {len(df)} rows")
         return df
     
 
@@ -180,12 +152,21 @@ class DeltaCSVImporter:
             
             # Date range
             if 'timestamp' in df.columns:
-                date_range = {
-                    'start_date': df['timestamp'].min().strftime('%Y-%m-%d'),
-                    'end_date': df['timestamp'].max().strftime('%Y-%m-%d'),
-                    'trading_days': (df['timestamp'].max() - df['timestamp'].min()).days
-                }
-                analysis['date_range'] = date_range
+                try:
+                    # Convert timestamp to datetime for analysis
+                    df_temp = df.copy()
+                    df_temp['timestamp'] = pd.to_datetime(df_temp['timestamp'], errors='coerce')
+                    df_temp = df_temp.dropna(subset=['timestamp'])
+                    
+                    if len(df_temp) > 0:
+                        date_range = {
+                            'start_date': df_temp['timestamp'].min().strftime('%Y-%m-%d'),
+                            'end_date': df_temp['timestamp'].max().strftime('%Y-%m-%d'),
+                            'trading_days': (df_temp['timestamp'].max() - df_temp['timestamp'].min()).days
+                        }
+                        analysis['date_range'] = date_range
+                except Exception as e:
+                    print(f"⚠️ Could not analyze date range: {str(e)}")
             
             # Trading direction analysis
             if 'side' in df.columns:
@@ -268,35 +249,58 @@ class DeltaCSVImporter:
         
         for index, row in df.iterrows():
             try:
-                # Determine entry and exit prices based on available data
-                entry_price = float(row.get('exec_price', row.get('order_price', 0)))
-                exit_price = float(row.get('exec_price', 0))  # Use execution price as exit
+                # Safely convert values with error handling
+                def safe_float(value, default=0.0):
+                    if pd.isna(value) or value == '':
+                        return default
+                    try:
+                        return float(value)
+                    except (ValueError, TypeError):
+                        return default
                 
-                # Calculate P&L if not provided
-                pnl = row.get('pnl', 0)
-                if pd.isna(pnl) and 'cashflow' in row:
-                    pnl = float(row.get('cashflow', 0))
+                def safe_str(value, default=''):
+                    if pd.isna(value) or value == '':
+                        return default
+                    return str(value)
+                
+                # Parse timestamp safely
+                timestamp = row.get('timestamp', datetime.now())
+                if isinstance(timestamp, str):
+                    try:
+                        timestamp = pd.to_datetime(timestamp, errors='coerce')
+                        if pd.isna(timestamp):
+                            timestamp = datetime.now()
+                    except:
+                        timestamp = datetime.now()
+                
+                # Extract trade data with safe conversion
+                entry_price = safe_float(row.get('exec_price', row.get('order_price', 0)))
+                exit_price = safe_float(row.get('exec_price', 0))
+                quantity = safe_float(row.get('quantity', 0))
+                pnl = safe_float(row.get('pnl', 0))
+                fees = safe_float(row.get('fees', 0))
+                stop_price = safe_float(row.get('stop_price', entry_price * 0.98))
                 
                 trade_data = {
-                    'symbol': row.get('symbol', 'UNKNOWN'),
-                    'direction': row.get('side', 'long'),
-                    'quantity': float(row.get('quantity', 0)),
+                    'symbol': safe_str(row.get('symbol', 'UNKNOWN')),
+                    'direction': safe_str(row.get('side', 'long')),
+                    'quantity': quantity,
                     'entry_price': entry_price,
                     'exit_price': exit_price,
-                    'stop_price': float(row.get('stop_price', entry_price * 0.98)),  # Use actual stop or estimate
-                    'account_equity': 10000.0,  # Default - will be updated
-                    'risk_percent': 2.0,  # Default risk
-                    'pnl': float(pnl) if not pd.isna(pnl) else 0.0,
-                    'r_multiple': 0.0,  # Will be calculated
-                    'trade_time': row.get('timestamp', datetime.now()),
-                    'entry_time': row.get('timestamp', datetime.now()),
-                    'exit_time': row.get('timestamp', datetime.now()),
+                    'stop_price': stop_price,
+                    'account_equity': 10000.0,
+                    'risk_percent': 2.0,
+                    'pnl': pnl,
+                    'r_multiple': 0.0,
+                    'trade_time': timestamp,
+                    'entry_time': timestamp,
+                    'exit_time': timestamp,
                     'source': 'csv_import',
                     'exchange': 'Delta Exchange',
-                    'external_id': str(row.get('order_id', f"csv_{index}")),
-                    'fees': float(row.get('fees', 0)),
-                    'logic': f'Imported from CSV - Order Type: {row.get("order_type", "Unknown")} - Status: {row.get("status", "Unknown")}',
-                    'notes': f'Imported from Delta Exchange CSV on {datetime.now().strftime("%Y-%m-%d")}. {row.get("explanation", "")}',
+                    'external_id': safe_str(row.get('order_id', f"csv_{index}")),
+                    'fees': fees,
+                    'logic': f'Imported from CSV - Order Type: {safe_str(row.get("order_type", "Unknown"))} - Status: {safe_str(row.get("status", "Unknown"))}',
+                    'notes': f'Imported from Delta Exchange CSV on {datetime.now().strftime("%Y-%m-%d")}. {safe_str(row.get("explanation", ""))}',
                     'setup_id': default_setup_id
                 }
                 
