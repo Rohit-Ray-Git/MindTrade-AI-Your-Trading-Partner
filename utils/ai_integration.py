@@ -290,134 +290,230 @@ class GeminiAI:
         if not self.enabled:
             return self._get_default_coaching_advice()
         
-        try:
-            # Prepare trade summary
-            total_trades = len(recent_trades)
-            winning_trades = len([t for t in recent_trades if t.get('pnl', 0) > 0])
-            win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else 0
-            total_pnl = sum(t.get('pnl', 0) for t in recent_trades)
-            
-            # Prepare psychology summary
-            avg_sentiment = sum(n.get('sentiment_score', 0) for n in psychology_notes) / len(psychology_notes) if psychology_notes else 0
-            common_emotions = self._extract_common_emotions(psychology_notes)
-            
-            prompt = f"""
-            Generate personalized coaching advice based on the following trading performance and psychology data:
-            
-            Performance Summary:
-            - Total Trades: {total_trades}
-            - Win Rate: {win_rate:.1f}%
-            - Total P&L: ${total_pnl:.2f}
-            - Average Sentiment: {avg_sentiment:.2f}
-            - Common Emotions: {', '.join(common_emotions)}
-            
-            Recent Trades: {json.dumps(recent_trades[:5], indent=2)}
-            Psychology Notes: {json.dumps(psychology_notes[:5], indent=2)}
-            
-            Please provide a JSON response with the following structure:
-            {{
-                "overall_assessment": {{
-                    "strengths": ["strength1", "strength2"],
-                    "weaknesses": ["weakness1", "weakness2"],
-                    "current_state": "excellent/good/fair/needs_improvement"
-                }},
-                "psychology_coaching": {{
-                    "emotional_patterns": ["pattern1", "pattern2"],
-                    "mindset_advice": ["advice1", "advice2"],
-                    "stress_management": ["tip1", "tip2"]
-                }},
-                "technical_coaching": {{
-                    "setup_improvements": ["improvement1", "improvement2"],
-                    "risk_management": ["tip1", "tip2"],
-                    "execution_tips": ["tip1", "tip2"]
-                }},
-                "action_plan": {{
-                    "immediate_actions": ["action1", "action2"],
-                    "weekly_goals": ["goal1", "goal2"],
-                    "monthly_objectives": ["objective1", "objective2"]
-                }},
-                "motivational_message": "string"
-            }}
-            
-            Focus on providing actionable, specific advice that addresses both technical and psychological aspects of trading.
-            """
-            
-            response = self.model.generate_content(prompt)
-            result = self._safe_json_parse(response.text, "coaching")
-            
-            logger.info("Coaching advice generated successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"Error generating coaching advice: {e}")
-            return self._get_default_coaching_advice()
+                # Retry logic for API errors
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                # Prepare trade summary with robust type checking
+                total_trades = len(recent_trades)
+                
+                # Count winning trades with safe PnL checking
+                winning_trades = 0
+                total_pnl = 0
+                for t in recent_trades:
+                    pnl = t.get('pnl')
+                    if pnl is not None:
+                        try:
+                            pnl_float = float(pnl)
+                            total_pnl += pnl_float
+                            if pnl_float > 0:
+                                winning_trades += 1
+                        except (ValueError, TypeError):
+                            continue
+                
+                win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else 0
+                
+                # Prepare psychology summary with robust null safety and type checking
+                sentiment_scores = []
+                for n in psychology_notes:
+                    score = n.get('sentiment_score')
+                    if score is not None:
+                        try:
+                            # Convert to float if it's a string or other type
+                            score_float = float(score)
+                            sentiment_scores.append(score_float)
+                        except (ValueError, TypeError):
+                            # Skip invalid values
+                            continue
+                
+                avg_sentiment = sum(sentiment_scores) / len(sentiment_scores) if sentiment_scores else 0
+                common_emotions = self._extract_common_emotions(psychology_notes)
+                
+                # Debug logging
+                logger.info(f"Processed {len(recent_trades)} trades, {len(psychology_notes)} psychology notes")
+                logger.info(f"Win rate: {win_rate:.1f}%, Total PnL: ${total_pnl:.2f}, Avg sentiment: {avg_sentiment:.2f}")
+                
+                prompt = f"""
+                Generate personalized coaching advice based on the following trading performance and psychology data:
+                
+                Performance Summary:
+                - Total Trades: {total_trades}
+                - Win Rate: {win_rate:.1f}%
+                - Total P&L: ${total_pnl:.2f}
+                - Average Sentiment: {avg_sentiment:.2f}
+                - Common Emotions: {', '.join(common_emotions)}
+                
+                Recent Trades: {json.dumps(recent_trades[:5], indent=2)}
+                
+                Psychology Analysis Data (Analyze these notes deeply for emotional patterns, mindset issues, and behavioral trends):
+                {json.dumps(psychology_notes[:10], indent=2)}
+                
+                IMPORTANT: Focus on analyzing the actual content of the psychology notes. Look for:
+                1. Recurring emotional themes (fear, greed, confidence, doubt)
+                2. Behavioral patterns (impulsive decisions, hesitation, revenge trading)
+                3. Mindset issues (perfectionism, overconfidence, self-doubt)
+                4. Stress triggers and coping mechanisms
+                5. Relationship between emotional state and trading performance
+                
+                Please provide a JSON response with the following structure:
+                {{
+                    "overall_assessment": {{
+                        "strengths": ["strength1", "strength2"],
+                        "weaknesses": ["weakness1", "weakness2"],
+                        "current_state": "excellent/good/fair/needs_improvement"
+                    }},
+                    "psychology_coaching": {{
+                        "emotional_patterns": ["specific pattern from notes", "another pattern from notes"],
+                        "mindset_advice": ["specific advice based on note content", "another specific advice"],
+                        "stress_management": ["specific stress management based on triggers found", "another stress management tip"],
+                        "behavioral_insights": ["specific behavioral observation from notes", "another behavioral insight"],
+                        "confidence_analysis": ["specific confidence pattern from notes", "confidence building advice"],
+                        "risk_perception": ["how emotions affect risk perception based on notes", "risk management advice"]
+                    }},
+                    "technical_coaching": {{
+                        "setup_improvements": ["improvement1", "improvement2"],
+                        "risk_management": ["tip1", "tip2"],
+                        "execution_tips": ["tip1", "tip2"]
+                    }},
+                    "action_plan": {{
+                        "immediate_actions": ["action1", "action2"],
+                        "weekly_goals": ["goal1", "goal2"],
+                        "monthly_objectives": ["objective1", "objective2"]
+                    }},
+                    "motivational_message": "string"
+                }}
+                
+                Focus on providing actionable, specific advice that addresses both technical and psychological aspects of trading.
+                """
+                
+                response = self.model.generate_content(prompt)
+                
+                # Debug: Log the raw response
+                logger.info(f"Raw AI response length: {len(response.text)}")
+                logger.info(f"Raw AI response preview: {response.text[:200]}...")
+                
+                result = self._safe_json_parse(response.text, "coaching")
+                
+                logger.info("Coaching advice generated successfully")
+                return result
+                
+            except Exception as e:
+                logger.warning(f"Attempt {attempt + 1}/{max_retries} failed: {e}")
+                if attempt < max_retries - 1:
+                    import time
+                    time.sleep(2)  # Wait 2 seconds before retrying
+                    continue
+                else:
+                    logger.error(f"All {max_retries} attempts failed. Using fallback.")
+                    return self._get_default_coaching_advice()
     
     def detect_patterns(self, trades: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Detect trading patterns using Gemini"""
         if not self.enabled:
             return self._get_default_pattern_analysis()
         
-        try:
-            prompt = f"""
-            Analyze the following trades to detect patterns and recurring behaviors:
-            
-            Trades: {json.dumps(trades, indent=2)}
-            
-            Please provide a JSON response with the following structure:
-            {{
-                "setup_patterns": [
-                    {{
-                        "pattern_name": "string",
-                        "frequency": int,
-                        "win_rate": float,
-                        "avg_r_multiple": float,
-                        "description": "string"
-                    }}
-                ],
-                "timing_patterns": [
-                    {{
-                        "pattern_name": "string",
-                        "frequency": int,
-                        "description": "string"
-                    }}
-                ],
-                "risk_patterns": [
-                    {{
-                        "pattern_name": "string",
-                        "frequency": int,
-                        "impact": "positive/negative",
-                        "description": "string"
-                    }}
-                ],
-                "behavioral_patterns": [
-                    {{
-                        "pattern_name": "string",
-                        "frequency": int,
-                        "impact": "positive/negative",
-                        "description": "string"
-                    }}
-                ],
-                "recommendations": ["rec1", "rec2"]
-            }}
-            
-            Focus on identifying both profitable and problematic patterns that can inform trading decisions.
-            """
-            
-            response = self.model.generate_content(prompt)
-            result = self._safe_json_parse(response.text, "pattern")
-            
-            logger.info("Pattern analysis completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"Error in pattern detection: {e}")
-            return self._get_default_pattern_analysis()
+        # Retry logic for API errors
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                prompt = f"""
+                Analyze the following trades to detect patterns and recurring behaviors:
+                
+                Trades: {json.dumps(trades, indent=2)}
+                
+                Please provide a JSON response with the following structure:
+                {{
+                    "setup_patterns": [
+                        {{
+                            "pattern_name": "string",
+                            "frequency": int,
+                            "win_rate": float,
+                            "avg_r_multiple": float,
+                            "description": "string"
+                        }}
+                    ],
+                    "timing_patterns": [
+                        {{
+                            "pattern_name": "string",
+                            "frequency": int,
+                            "description": "string"
+                        }}
+                    ],
+                    "risk_patterns": [
+                        {{
+                            "pattern_name": "string",
+                            "frequency": int,
+                            "impact": "positive/negative",
+                            "description": "string"
+                        }}
+                    ],
+                    "behavioral_patterns": [
+                        {{
+                            "pattern_name": "string",
+                            "frequency": int,
+                            "impact": "positive/negative",
+                            "description": "string"
+                        }}
+                    ],
+                    "recommendations": ["rec1", "rec2"]
+                }}
+                
+                Focus on identifying both profitable and problematic patterns that can inform trading decisions.
+                """
+                
+                response = self.model.generate_content(prompt)
+                result = self._safe_json_parse(response.text, "pattern")
+                
+                logger.info("Pattern analysis completed successfully")
+                return result
+                
+            except Exception as e:
+                logger.warning(f"Pattern detection attempt {attempt + 1}/{max_retries} failed: {e}")
+                if attempt < max_retries - 1:
+                    import time
+                    time.sleep(2)  # Wait 2 seconds before retrying
+                    continue
+                else:
+                    logger.error(f"All {max_retries} pattern detection attempts failed. Using fallback.")
+                    return self._get_default_pattern_analysis()
     
     def _safe_json_parse(self, response_text: str, analysis_type: str) -> Dict[str, Any]:
         """Safely parse JSON response with fallback"""
         try:
+            # First, try to parse the response as-is
             return json.loads(response_text)
         except json.JSONDecodeError:
+            # If that fails, try to extract JSON from markdown code blocks
+            try:
+                # Look for JSON wrapped in markdown code blocks
+                if "```json" in response_text:
+                    # Extract content between ```json and ```
+                    start = response_text.find("```json") + 7
+                    end = response_text.find("```", start)
+                    if end != -1:
+                        json_content = response_text[start:end].strip()
+                        return json.loads(json_content)
+                
+                # Also try without the "json" specifier
+                if "```" in response_text:
+                    # Extract content between ``` and ```
+                    start = response_text.find("```") + 3
+                    end = response_text.find("```", start)
+                    if end != -1:
+                        json_content = response_text[start:end].strip()
+                        return json.loads(json_content)
+                
+                # If still no success, try to find JSON-like content
+                import re
+                json_pattern = r'\{.*\}'
+                match = re.search(json_pattern, response_text, re.DOTALL)
+                if match:
+                    json_content = match.group(0)
+                    return json.loads(json_content)
+                
+            except (json.JSONDecodeError, ValueError) as e:
+                logger.warning(f"Failed to extract JSON from response: {e}")
+            
             logger.warning(f"Gemini returned non-JSON response for {analysis_type}: {response_text[:100]}...")
             
             # Create fallback structured response based on analysis type
@@ -438,15 +534,22 @@ class GeminiAI:
         """Extract common emotions from psychology notes"""
         emotions = []
         for note in psychology_notes:
-            if note.get('fear_score', 0) > 0.5:
+            # Handle None values safely
+            fear_score = note.get('fear_score')
+            greed_score = note.get('greed_score')
+            patience_score = note.get('patience_score')
+            fomo_score = note.get('fomo_score')
+            revenge_score = note.get('revenge_score')
+            
+            if fear_score is not None and fear_score > 0.5:
                 emotions.append('Fear')
-            if note.get('greed_score', 0) > 0.5:
+            if greed_score is not None and greed_score > 0.5:
                 emotions.append('Greed')
-            if note.get('patience_score', 0) > 0.5:
+            if patience_score is not None and patience_score > 0.5:
                 emotions.append('Patience')
-            if note.get('fomo_score', 0) > 0.5:
+            if fomo_score is not None and fomo_score > 0.5:
                 emotions.append('FOMO')
-            if note.get('revenge_score', 0) > 0.5:
+            if revenge_score is not None and revenge_score > 0.5:
                 emotions.append('Revenge')
         
         # Return unique emotions

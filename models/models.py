@@ -60,7 +60,7 @@ class PsychologyNote(Base):
     __tablename__ = "psychology_notes"
     
     id = Column(Integer, primary_key=True, index=True)
-    trade_id = Column(Integer, ForeignKey("trades.id"), nullable=False)
+    trade_id = Column(Integer, ForeignKey("trades.id"), nullable=True)
     note_text = Column(Text, nullable=False)
     self_tags = Column(JSON)  # Array of user-defined tags
     nlp_tags = Column(JSON)   # Array of AI-detected tags
@@ -75,7 +75,7 @@ class PsychologyNote(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     # Relationships
-    trade = relationship("Trade", back_populates="psychology_notes")
+    trade = relationship("Trade", back_populates="psychology_notes", foreign_keys=[trade_id])
 
 class AgentOutput(Base):
     """AI agent analysis outputs"""

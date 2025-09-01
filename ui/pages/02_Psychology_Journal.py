@@ -72,7 +72,7 @@ with st.form("psychology_form"):
         }
         
         try:
-            note = psych_dal.create_note(note_data)
+            note = psych_dal.create_psychology_note(note_data)
             st.success("✅ Psychology note added successfully!")
             
             # AI Analysis
@@ -113,7 +113,13 @@ recent_notes = psych_dal.get_recent_notes(limit=10)
 
 if recent_notes:
     for note in recent_notes:
-        with st.expander(f"Note from {note.created_at.strftime('%Y-%m-%d %H:%M')}"):
+        # Handle cases where created_at might be None
+        if note.created_at:
+            timestamp = note.created_at.strftime('%Y-%m-%d %H:%M')
+        else:
+            timestamp = "Unknown Date"
+            
+        with st.expander(f"Note from {timestamp}"):
             st.write(note.note_text)
             if note.confidence_score is not None:
                 confidence_level = int(note.confidence_score * 10)

@@ -113,7 +113,13 @@ else:
             index=0
         )
         
-        selected_trade_id = trade_options[trade_options.index((selected_trade_text, None))][1] if selected_trade_text else None
+        # Find the selected trade ID by matching the option text
+        selected_trade_id = None
+        if selected_trade_text:
+            for option_text, trade_id in trade_options:
+                if option_text == selected_trade_text:
+                    selected_trade_id = trade_id
+                    break
         
         if selected_trade_id:
             selected_trade = next((t for t in filtered_trades if t.id == selected_trade_id), None)
@@ -137,8 +143,8 @@ else:
                 
                 with col2:
                     st.markdown("**📅 Trade Information:**")
-                    st.write(f"**Entry Time:** {selected_trade.entry_time.strftime('%Y-%m-%d %H:%M')}")
-                    st.write(f"**Exit Time:** {selected_trade.exit_time.strftime('%Y-%m-%d %H:%M')}")
+                    st.write(f"**Entry Time:** {selected_trade.entry_time.strftime('%Y-%m-%d %H:%M') if selected_trade.entry_time else 'Not set'}")
+                    st.write(f"**Exit Time:** {selected_trade.exit_time.strftime('%Y-%m-%d %H:%M') if selected_trade.exit_time else 'Not set'}")
                     st.write(f"**Source:** {selected_trade.source}")
                     st.write(f"**Fees:** ${selected_trade.fees:.2f}")
                     st.write(f"**Stop Price:** ${selected_trade.stop_price:.4f}" if selected_trade.stop_price else "**Stop Price:** Not set")
@@ -303,7 +309,12 @@ else:
                 if psych_notes:
                     with st.expander("🧠 Psychology Notes"):
                         for note in psych_notes:
-                            st.write(f"**{note.created_at.strftime('%Y-%m-%d %H:%M')}:** {note.note_text}")
+                            # Handle cases where created_at might be None
+                            if note.created_at:
+                                timestamp = note.created_at.strftime('%Y-%m-%d %H:%M')
+                            else:
+                                timestamp = "Unknown Date"
+                            st.write(f"**{timestamp}:** {note.note_text}")
                             if note.self_tags:
                                 st.write(f"**Tags:** {', '.join(note.self_tags)}")
 

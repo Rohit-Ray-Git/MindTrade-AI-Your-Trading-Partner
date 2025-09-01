@@ -218,10 +218,11 @@ elif upload_option == "Text File Upload":
     st.subheader("📄 Text File Upload")
     
     st.markdown("""
-    **Text Format Expected:**
-    - One psychology note per line
-    - Format: `YYYY-MM-DD HH:MM | Emotional_State | Confidence | Notes`
-    - Example: `2024-01-01 14:30 | Confident | 8 | Felt good about this setup, patient waiting`
+    **Text Format Supported:**
+    - Conversational format with **You:** and **ChatGPT:** markers
+    - Example: `**You:** Bhai, market ne retailers ko phasaya`
+    - System will automatically extract psychology insights from conversations
+    - Each meaningful message becomes a psychology note
     """)
     
     uploaded_text = st.file_uploader(
@@ -246,33 +247,116 @@ elif upload_option == "Text File Upload":
                 psych_dal = PsychologyDAL(db)
                 
                 imported_count = 0
-                for line in lines:
+                current_date = datetime.now()
+                
+                # Debug: Show what we're processing
+                st.info(f"Processing {len(lines)} lines...")
+                
+                # Debug: Show first few lines to understand format
+                st.write("First 5 lines for debugging:")
+                for i, debug_line in enumerate(lines[:5]):
+                    st.write(f"Line {i+1}: {debug_line[:100]}...")
+                
+                # Debug: Show what we're looking for
+                st.write("Looking for multi-line conversations starting with '**You:**', '**ChatGPT:**', 'You:', or 'ChatGPT:'")
+                
+                # Multi-line conversation parser
+                current_speaker = None
+                current_message = []
+                
+                for i, line in enumerate(lines):
                     try:
-                        if '|' in line:
-                            parts = [part.strip() for part in line.split('|')]
-                            if len(parts) >= 4:
-                                timestamp_str, emotion, confidence_str, notes = parts[:4]
-                                
-                                # Parse timestamp
-                                timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M')
-                                
-                                # Parse confidence
-                                confidence = float(confidence_str) / 10.0
-                                
-                                # Create psychology note
-                                note_data = {
-                                    'note_text': notes,
-                                    'confidence_score': confidence,
-                                    'self_tags': [emotion.lower()],
-                                    'created_at': timestamp
-                                }
-                                
-                                psych_dal.create_psychology_note(note_data)
-                                imported_count += 1
-                                
+                        line = line.strip()
+                        
+                        # Check for speaker markers
+                        if '**You:**' in line or line.startswith('You:'):
+                            # Save previous message if exists
+                            if current_speaker and current_message:
+                                message_text = ' '.join(current_message).strip()
+                                if message_text and len(message_text) > 5:
+                                    # Create psychology note from conversation
+                                    note_data = {
+                                        'note_text': f"[{current_speaker}] {message_text}",
+                                        'confidence_score': 0.7,  # Default confidence
+                                        'self_tags': ['conversation', 'trading_psychology', current_speaker.lower()],
+                                        'created_at': current_date if current_date else datetime.now()
+                                    }
+                                    
+                                    try:
+                                        psych_dal.create_psychology_note(note_data)
+                                        imported_count += 1
+                                        
+                                        # Show progress every 100 notes
+                                        if imported_count % 100 == 0:
+                                            st.info(f"Imported {imported_count} notes so far...")
+                                            
+                                    except Exception as db_error:
+                                        st.warning(f"Database error for note {imported_count + 1}: {str(db_error)}")
+                                        continue
+                                    
+                                    # Update date for next note (spread them out)
+                                    current_date = current_date - timedelta(minutes=5)
+                            
+                            # Start new message
+                            current_speaker = 'You'
+                            current_message = []
+                            
+                        elif '**ChatGPT:**' in line or line.startswith('ChatGPT:'):
+                            # Save previous message if exists
+                            if current_speaker and current_message:
+                                message_text = ' '.join(current_message).strip()
+                                if message_text and len(message_text) > 5:
+                                    # Create psychology note from conversation
+                                    note_data = {
+                                        'note_text': f"[{current_speaker}] {message_text}",
+                                        'confidence_score': 0.7,  # Default confidence
+                                        'self_tags': ['conversation', 'trading_psychology', current_speaker.lower()],
+                                        'created_at': current_date if current_date else datetime.now()
+                                    }
+                                    
+                                    try:
+                                        psych_dal.create_psychology_note(note_data)
+                                        imported_count += 1
+                                        
+                                        # Show progress every 100 notes
+                                        if imported_count % 100 == 0:
+                                            st.info(f"Imported {imported_count} notes so far...")
+                                            
+                                    except Exception as db_error:
+                                        st.warning(f"Database error for note {imported_count + 1}: {str(db_error)}")
+                                        continue
+                                    
+                                    # Update date for next note (spread them out)
+                                    current_date = current_date - timedelta(minutes=5)
+                            
+                            # Start new message
+                            current_speaker = 'ChatGPT'
+                            current_message = []
+                            
+                        elif current_speaker and line:
+                            # Add line to current message
+                            current_message.append(line)
+                            
                     except Exception as e:
-                        st.warning(f"Error importing line: {line[:50]}... - {str(e)}")
+                        st.warning(f"Error processing line {i+1}: {line[:50]}... - {str(e)}")
                         continue
+                
+                # Don't forget the last message
+                if current_speaker and current_message:
+                    message_text = ' '.join(current_message).strip()
+                    if message_text and len(message_text) > 5:
+                        note_data = {
+                            'note_text': f"[{current_speaker}] {message_text}",
+                            'confidence_score': 0.7,
+                            'self_tags': ['conversation', 'trading_psychology', current_speaker.lower()],
+                            'created_at': current_date if current_date else datetime.now()
+                        }
+                        
+                        try:
+                            psych_dal.create_psychology_note(note_data)
+                            imported_count += 1
+                        except Exception as db_error:
+                            st.warning(f"Database error for final note: {str(db_error)}")
                 
                 st.success(f"✅ Successfully imported {imported_count} psychology notes!")
 
@@ -290,7 +374,13 @@ if recent_notes:
     # Show recent psychology notes
     st.subheader("📋 Recent Psychology Notes")
     for note in recent_notes[:10]:
-        with st.expander(f"{note.created_at.strftime('%Y-%m-%d %H:%M')} - {', '.join(note.self_tags) if note.self_tags else 'No tags'}"):
+        # Handle cases where created_at might be None
+        if note.created_at:
+            timestamp = note.created_at.strftime('%Y-%m-%d %H:%M')
+        else:
+            timestamp = "Unknown Date"
+            
+        with st.expander(f"{timestamp} - {', '.join(note.self_tags) if note.self_tags else 'No tags'}"):
             st.write(note.note_text)
             if note.confidence_score:
                 st.write(f"**Confidence:** {int(note.confidence_score * 10)}/10")
