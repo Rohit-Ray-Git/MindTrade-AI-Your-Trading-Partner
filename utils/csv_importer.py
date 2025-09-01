@@ -222,16 +222,21 @@ class DeltaCSVImporter:
             
             # Trading frequency
             if 'timestamp' in df.columns:
-                df['date'] = df['timestamp'].dt.date
-                daily_trades = df.groupby('date').size()
-                
-                analysis['frequency_analysis'] = {
-                    'avg_trades_per_day': float(daily_trades.mean()),
-                    'max_trades_per_day': int(daily_trades.max()),
-                    'min_trades_per_day': int(daily_trades.min()),
-                    'most_active_day': str(daily_trades.idxmax()),
-                    'total_trading_days': len(daily_trades)
-                }
+                try:
+                    # Use the same temp dataframe with converted timestamps
+                    if 'df_temp' in locals() and len(df_temp) > 0:
+                        df_temp['date'] = df_temp['timestamp'].dt.date
+                        daily_trades = df_temp.groupby('date').size()
+                        
+                        analysis['frequency_analysis'] = {
+                            'avg_trades_per_day': float(daily_trades.mean()),
+                            'max_trades_per_day': int(daily_trades.max()),
+                            'min_trades_per_day': int(daily_trades.min()),
+                            'most_active_day': str(daily_trades.idxmax()),
+                            'total_trading_days': len(daily_trades)
+                        }
+                except Exception as e:
+                    print(f"⚠️ Could not analyze trading frequency: {str(e)}")
             
             print(f"✅ Analysis complete - {len(analysis)} categories analyzed")
             return analysis

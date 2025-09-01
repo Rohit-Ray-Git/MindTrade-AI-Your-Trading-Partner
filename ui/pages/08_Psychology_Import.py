@@ -130,29 +130,34 @@ if upload_option == "CSV File Upload":
                     if ai_engine.enabled:
                         st.subheader("🤖 AI Psychology Analysis")
                         with st.spinner("Analyzing emotional patterns..."):
-                            # Get all notes for analysis
-                            all_notes = psych_dal.get_recent_notes(limit=1000)
-                            
-                            if all_notes:
-                                # Prepare data for AI analysis
-                                psychology_text = "\n".join([note.note_text for note in all_notes if note.note_text])
+                            try:
+                                # Get all notes for analysis
+                                all_notes = psych_dal.get_recent_notes(limit=1000)
                                 
-                                if psychology_text:
-                                    analysis = ai_engine.analyze_psychology_with_image(psychology_text)
+                                if all_notes:
+                                    # Prepare data for AI analysis
+                                    psychology_text = "\n".join([note.note_text for note in all_notes if note.note_text])
                                     
-                                    if analysis:
-                                        col1, col2, col3 = st.columns(3)
-                                        with col1:
-                                            st.metric("Overall Sentiment", f"{analysis.get('sentiment_score', 0):.2f}")
-                                        with col2:
-                                            st.metric("Confidence Trend", f"{analysis.get('confidence_score', 0):.2f}")
-                                        with col3:
-                                            st.metric("Emotional Stability", f"{analysis.get('fear_score', 0):.2f}")
+                                    if psychology_text:
+                                        analysis = ai_engine.analyze_psychology_with_image(psychology_text)
                                         
-                                        if 'key_insights' in analysis:
-                                            st.subheader("🧠 Key Psychology Insights")
-                                            for insight in analysis['key_insights']:
-                                                st.write(f"• {insight}")
+                                        if analysis:
+                                            col1, col2, col3 = st.columns(3)
+                                            with col1:
+                                                st.metric("Overall Sentiment", f"{analysis.get('sentiment_score', 0):.2f}")
+                                            with col2:
+                                                st.metric("Confidence Trend", f"{analysis.get('confidence_score', 0):.2f}")
+                                            with col3:
+                                                st.metric("Emotional Stability", f"{analysis.get('fear_score', 0):.2f}")
+                                            
+                                            if 'key_insights' in analysis:
+                                                st.subheader("🧠 Key Psychology Insights")
+                                                for insight in analysis['key_insights']:
+                                                    st.write(f"• {insight}")
+                            except Exception as e:
+                                st.warning(f"AI analysis failed: {str(e)}")
+        except Exception as e:
+            st.error(f"Error reading CSV file: {str(e)}")
 
 elif upload_option == "Manual Entry":
     st.subheader("✍️ Manual Psychology Entry")

@@ -141,14 +141,26 @@ with tab1:
                     # Prepare data for AI analysis
                     trade_data = []
                     for trade in trades[:10]:  # Limit to recent trades
-                        trade_data.append({
-                            'symbol': trade.symbol,
-                            'direction': trade.direction,
-                            'pnl': trade.pnl,
-                            'r_multiple': trade.r_multiple,
-                            'entry_time': trade.entry_time.isoformat() if trade.entry_time else None,
-                            'setup_name': trade.setup.name if trade.setup else 'No Setup'
-                        })
+                        try:
+                            # Safely access setup name to avoid DetachedInstanceError
+                            setup_name = 'No Setup'
+                            if hasattr(trade, 'setup') and trade.setup:
+                                try:
+                                    setup_name = trade.setup.name
+                                except:
+                                    setup_name = 'No Setup'
+                            
+                            trade_data.append({
+                                'symbol': trade.symbol,
+                                'direction': trade.direction,
+                                'pnl': trade.pnl,
+                                'r_multiple': trade.r_multiple,
+                                'entry_time': trade.entry_time.isoformat() if trade.entry_time else None,
+                                'setup_name': setup_name
+                            })
+                        except Exception as e:
+                            st.warning(f"⚠️ Error processing trade: {str(e)}")
+                            continue
                     
                     psychology_data = []
                     for note in psychology_notes[:10]:
