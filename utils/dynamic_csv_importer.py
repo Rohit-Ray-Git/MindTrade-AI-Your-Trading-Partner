@@ -287,7 +287,7 @@ class DynamicCSVImporter:
                 return value
             return default
         
-        # Extract basic trade data
+        # Extract basic trade data with validation
         symbol = get_value('symbol', 'UNKNOWN')
         side = get_value('side', 'long')
         quantity = float(get_value('quantity', 0))
@@ -297,6 +297,12 @@ class DynamicCSVImporter:
         fees = float(get_value('fees', 0))
         order_id = str(get_value('order_id', f"dynamic_{index}"))
         status = get_value('status', 'unknown')
+        
+        # Ensure minimum valid values
+        if quantity <= 0:
+            quantity = 1.0  # Minimum quantity
+        if price <= 0:
+            price = 1.0     # Minimum price
         
         # Normalize side
         if side and isinstance(side, str):
@@ -313,6 +319,7 @@ class DynamicCSVImporter:
             except:
                 timestamp = datetime.now()
         
+        # Ensure all required fields are present with safe defaults
         trade_data = {
             'symbol': symbol,
             'direction': side,
@@ -320,8 +327,8 @@ class DynamicCSVImporter:
             'entry_price': price,
             'exit_price': price,  # Same as entry for now
             'stop_price': price * 0.98,  # Estimate
-            'account_equity': 10000.0,
-            'risk_percent': 2.0,
+            'account_equity': 10000.0,  # Default account equity
+            'risk_percent': 2.0,        # Default 2% risk
             'pnl': pnl,
             'r_multiple': 0.0,
             'trade_time': timestamp,
@@ -334,6 +341,18 @@ class DynamicCSVImporter:
             'logic': f'Dynamically imported - Status: {status}',
             'notes': f'Dynamically imported from CSV on {datetime.now().strftime("%Y-%m-%d")}. Original data: {dict(row)}'
         }
+        
+        # Validate required fields
+        required_fields = ['symbol', 'direction', 'entry_price', 'stop_price', 'exit_price', 'quantity']
+        for field in required_fields:
+            if trade_data[field] is None or (isinstance(trade_data[field], str) and trade_data[field].strip() == ''):
+                print(f"⚠️ Warning: {field} is missing or empty for row {index}, using default")
+                if field == 'symbol':
+                    trade_data[field] = 'UNKNOWN'
+                elif field in ['entry_price', 'stop_price', 'exit_price', 'quantity']:
+                    trade_data[field] = 0.0
+                elif field == 'direction':
+                    trade_data[field] = 'long'
         
         # Calculate R-multiple if we have P&L
         if trade_data['pnl'] != 0 and trade_data['entry_price'] > 0:

@@ -18,16 +18,31 @@ class TradeDAL:
     def create_trade(self, trade_data: Dict[str, Any]) -> Trade:
         """Create a new trade"""
         try:
-            # Calculate P&L and R-multiple
-            if trade_data['direction'] == 'Long':
+            # Validate required fields
+            required_fields = ['symbol', 'direction', 'entry_price', 'stop_price', 'exit_price', 'quantity']
+            for field in required_fields:
+                if field not in trade_data or trade_data[field] is None:
+                    raise ValueError(f"Missing required field: {field}")
+                if isinstance(trade_data[field], str) and trade_data[field].strip() == '':
+                    raise ValueError(f"Required field {field} cannot be empty")
+                if field in ['entry_price', 'stop_price', 'exit_price', 'quantity'] and trade_data[field] <= 0:
+                    raise ValueError(f"Required field {field} must be greater than 0")
+            
+            # Normalize direction and calculate P&L and R-multiple
+            direction = trade_data['direction'].lower().strip()
+            if direction in ['long', 'l']:
                 pnl = (trade_data['exit_price'] - trade_data['entry_price']) * trade_data['quantity']
-            else:
+                trade_data['direction'] = 'Long'  # Normalize to 'Long'
+            elif direction in ['short', 's']:
                 pnl = (trade_data['entry_price'] - trade_data['exit_price']) * trade_data['quantity']
+                trade_data['direction'] = 'Short'  # Normalize to 'Short'
+            else:
+                raise ValueError(f"Invalid direction: {trade_data['direction']}. Must be 'Long' or 'Short'")
             
             risk_amount = abs(trade_data['entry_price'] - trade_data['stop_price']) * trade_data['quantity']
             r_multiple = pnl / risk_amount if risk_amount > 0 else 0
             
-            # Create trade object
+            # Create trade object with safe field access
             trade = Trade(
                 symbol=trade_data['symbol'],
                 direction=trade_data['direction'],
@@ -35,15 +50,20 @@ class TradeDAL:
                 stop_price=trade_data['stop_price'],
                 exit_price=trade_data['exit_price'],
                 quantity=trade_data['quantity'],
-                account_equity=trade_data['account_equity'],
-                risk_percent=trade_data['risk_percent'],
+                account_equity=trade_data.get('account_equity', 0.0),  # Default to 0 if not provided
+                risk_percent=trade_data.get('risk_percent', 1.0),     # Default to 1% if not provided
                 pnl=pnl,
                 r_multiple=r_multiple,
-                trade_time=trade_data['trade_time'],
+                trade_time=trade_data.get('trade_time', datetime.now()),  # Default to now if not provided
                 source=trade_data.get('source', 'manual'),
                 logic=trade_data.get('logic'),
                 notes=trade_data.get('notes'),
-                setup_id=trade_data.get('setup_id')
+                setup_id=trade_data.get('setup_id'),
+                exchange=trade_data.get('exchange'),
+                external_id=trade_data.get('external_id'),
+                fees=trade_data.get('fees', 0.0),
+                entry_time=trade_data.get('entry_time'),
+                exit_time=trade_data.get('exit_time')
             )
             
             self.db.add(trade)
@@ -55,6 +75,8 @@ class TradeDAL:
             
         except Exception as e:
             logger.error(f"Error creating trade: {e}")
+            logger.error(f"Trade data received: {trade_data}")
+            logger.error(f"Required fields: symbol={trade_data.get('symbol')}, direction={trade_data.get('direction')}, entry_price={trade_data.get('entry_price')}, stop_price={trade_data.get('stop_price')}, exit_price={trade_data.get('exit_price')}, quantity={trade_data.get('quantity')}")
             self.db.rollback()
             raise
     

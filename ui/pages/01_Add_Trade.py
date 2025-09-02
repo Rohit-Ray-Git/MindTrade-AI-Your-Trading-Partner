@@ -92,13 +92,16 @@ with st.form("add_trade_form"):
                 'entry_price': entry_price,
                 'exit_price': exit_price,
                 'quantity': quantity,
-                'stop_price': stop_price if stop_price > 0 else None,
+                'stop_price': stop_price if stop_price > 0 else entry_price * 0.98,  # Default stop loss
                 'target_price': target_price if target_price > 0 else None,
                 'fees': fees,
                 'entry_time': entry_time,
                 'exit_time': exit_time,
                 'logic': logic,
-                'setup_id': setup_options.get(setup_name) if setup_name != "None" else None
+                'setup_id': setup_options.get(setup_name) if setup_name != "None" else None,
+                'account_equity': 10000.0,  # Default account equity
+                'risk_percent': 2.0,        # Default 2% risk
+                'trade_time': entry_time    # Use entry time as trade time
             }
             
             try:
